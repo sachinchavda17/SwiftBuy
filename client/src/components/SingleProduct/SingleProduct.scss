@@ -1,0 +1,152 @@
+@import "../../css-config/mixins.scss";
+
+.single-product-main-content {
+  margin: 25px 0;
+  @include md {
+    margin: 75px 0;
+  }
+  .layout {
+    max-width: calc(100% - 20px);
+    margin: 0 auto;
+    @include md {
+      max-width: 1200px;
+    }
+    .single-product-page {
+      display: flex;
+      flex-direction: column;
+      @include md {
+        flex-direction: row;
+      }
+      .left {
+        width: 100%;
+        background-color: var(--ternary-color);
+        flex-shrink: 0;
+        @include md {
+          width: 600px;
+          height: 600px;
+        }
+        img {
+          width: 100%;
+          display: block;
+        }
+      }
+      .right {
+        display: flex;
+        flex-direction: column;
+        padding-top: 20px;
+        color: var(--text-color);
+        @include md {
+          padding: 0 35px;
+        }
+        .name {
+          font-size: 20px;
+          line-height: 28px;
+          margin-bottom: 20px;
+          @include md {
+            font-size: 24px;
+            line-height: 32px;
+          }
+        }
+        .price {
+          font-size: 24px;
+          line-height: 32px;
+          margin-bottom: 20px;
+        }
+        .desc {
+          font-size: 14px;
+          line-height: 20px;
+          margin-bottom: 20px;
+          color: var(--sixth-color);
+          @include md {
+            font-size: 16px;
+            line-height: 24px;
+          }
+        }
+        .cart-buttons {
+          display: flex;
+          @include md {
+            margin-top: 30px;
+          }
+          .quantity-buttons {
+            width: fit-content;
+            display: flex;
+            border: 2px solid var(--forth-color);
+            margin-right: 10px;
+            height: 50px;
+            span {
+              font-size: 18px;
+              width: 40px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              cursor: pointer;
+              color: #6b6b6b;
+              &:nth-child(1) {
+                border-right: 2px solid var(--forth-color);
+              }
+              &:nth-child(2) {
+                width: 60px;
+              }
+              &:nth-child(3) {
+                border-left: 2px solid var(--forth-color);
+              }
+            }
+          }
+          .add-to-cart-button {
+            outline: 0;
+            border: 0;
+            height: 50px;
+            width: 180px;
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-color);
+            font-size: 16px;
+            background-color: var(--primary-color);
+            border-bottom: 3px solid var(--secondry-color);
+            flex-grow: 1;
+            @include md {
+              flex-grow: unset;
+            }
+          }
+        }
+      }
+      .divider {
+        margin: 20px 0;
+        height: 1px;
+        width: 100%;
+        background-color: var(--forth-color);
+      }
+      .info-item {
+        .text-bolds {
+          font-size: 18px;
+          font-weight: 500;
+          display: flex;
+          align-items: center;
+          &:nth-child(1) {
+            margin-bottom: 20px;
+          }
+          span {
+            font-size: 16px;
+            font-weight: 400;
+            color: #6b6b6b;
+            margin-right: 10px;
+          padding-left: 5px;
+          }
+          .social-icons {
+            display: flex;
+            align-items: center;
+            svg {
+              margin-right: 10px;
+              cursor: pointer;
+              color: #6b6b6b;
+            }
+          }
+        }
+      }
+
+    }
+  }
+}

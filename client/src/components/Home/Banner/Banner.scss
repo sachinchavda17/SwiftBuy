@@ -1,0 +1,111 @@
+@import "../../../css-config/mixins.scss";
+.hero-banner {
+  padding: 40px 0;
+  position: relative;
+  background-image: linear-gradient(to right, #8e2de2, #4a00e0);
+  z-index: -1;
+  @include md {
+    max-height: 100vh;
+    min-height: 400px;
+  }
+  .content {
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: column-reverse;
+    max-width: calc(100% - 20px);
+    margin: 0 auto;
+    position: relative;
+    @include md {
+      flex-direction: row;
+      max-width: 1200px;
+    }
+    .banner-img {
+      position: relative;
+      z-index: 9;
+      width: 200px;
+      margin-bottom: 20px;
+      // box-shadow : inset 0 0 10px white;
+
+      @include md {
+        width: 400px;
+        margin-right: 30px;
+        margin-top: 50px;
+        margin-bottom: 0;
+      }
+      @include lg {
+        margin-right: 60px;
+      }
+      @include xxl {
+        width: 600px;
+        margin-right: 0;
+        margin-top: 0;
+      }
+    }
+    .text-content {
+      color: var(--text-color);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      @include xl {
+        position: absolute;
+        left: 50px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      @include xxl {
+        left: 0;
+      }
+      h1 {
+        font-size: 70px;
+        font-weight: 700;
+        line-height: 1;
+        color: var(--text-color);
+        margin-bottom: 20px;
+        @include md {
+          font-size: 120px;
+        }
+        @include xl {
+          font-size: 170px;
+        }
+      }
+      p {
+        max-width: 300px;
+        font-size: 14px;
+        line-height: 20px;
+        margin-bottom: 20px;
+        @include md {
+          max-width: 500px;
+          font-size: 18px;
+          line-height: 24px;
+          margin-bottom: 40px;
+        }
+      }
+      .ctas {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        .banner-cta {
+          text-transform: uppercase;
+          font-size: 13px;
+          font-weight: 500;
+          width: fit-content;
+          border: 2px solid var(--text-color);
+          padding: 10px 20px;
+          transition: all ease 0.3s;
+          cursor: pointer;
+          &.v2 {
+            background-color: var(--text-color);
+            color: var(--background-color);
+          }
+          &:hover {
+            opacity: 0.6;
+          }
+        }
+      }
+    }
+  }
+}
