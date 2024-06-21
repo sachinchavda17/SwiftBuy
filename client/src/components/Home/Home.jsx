@@ -51,20 +51,12 @@ const Home = () => {
       <div className="main-content">
         <div className="layout">
           {loadingCategories ? (
-            <div className="flex my-9  flex-wrap  ">
-              {[...Array(4)].map((_, idx) => (
-                <CategorySkeleton key={idx} />
-              ))}
-            </div>
+            <CategorySkeleton />
           ) : (
             <Category categories={categories} />
           )}
           {loadingProducts ? (
-            <div className="flex my-20 gap-4 flex-wrap ">
-              {[...Array(4)].map((_, idx) => (
-                <ProductSkeleton key={idx} />
-              ))}
-            </div>
+            <ProductSkeleton />
           ) : (
             <Products headingText={"Popular Products"} products={products} />
           )}

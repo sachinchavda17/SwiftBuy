@@ -86,6 +86,10 @@
         font-size: 13px;
         background-color: var(--primary-color);
         border-bottom: 3px solid var(--secondary-color);
+        transition: .3s all;
+        &:hover{
+          background-color: var(--secondary-color);
+        }
       }
     }
     .cart-footer {

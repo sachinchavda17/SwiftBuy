@@ -4,7 +4,7 @@ import "./signup.scss";
 import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import axios from "axios";
-import Loading from "../shared/Loading";
+import Loading from "../skeletons/Loading";
 import Cookies from "js-cookie";
 import { Context } from "../../utils/context";
 

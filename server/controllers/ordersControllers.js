@@ -16,7 +16,9 @@ export const addOrderController = async (req, res) => {
       return res.status(400).json({ error: "No products in the order" });
     }
     if (!paymentMethod || !shippingAddress) {
-      return res.status(400).json({ error: "Payment method and shipping address are required" });
+      return res
+        .status(400)
+        .json({ error: "Payment method and shipping address are required" });
     }
 
     const lineItems = products.map((product) => ({
@@ -38,7 +40,7 @@ export const addOrderController = async (req, res) => {
       cancel_url: `${process.env.CLIENT_URL}/cancel`,
     });
 
-    console.log("Stripe session created:", session);
+    // console.log("Stripe session created:", session);
 
     const newOrder = new Order({
       userId,
@@ -51,10 +53,10 @@ export const addOrderController = async (req, res) => {
       orderStatus: "Pending",
       stripeSessionId: session.id,
     });
-    
+
     await newOrder.save();
 
-    res.status(200).json({ stripeSession: session });
+    res.status(200).json({ orderId: newOrder._id, stripeSession: session });
   } catch (error) {
     console.error("Error creating order:", error);
     res.status(500).send("Internal Server Error");

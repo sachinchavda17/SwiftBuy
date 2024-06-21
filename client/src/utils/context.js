@@ -26,6 +26,7 @@ const AppContext = ({ children }) => {
     }
   }, []);
 
+
   useEffect(() => {
     let count = 0;
     cartItems.forEach((item) => (count += item.quantity));

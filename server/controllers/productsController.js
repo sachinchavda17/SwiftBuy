@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Category from "../models/Category.js";
 import Product from "../models/Product.js";
 
@@ -125,19 +126,22 @@ export const removeProductController = async (req, res) => {
 
 export const getProductController = async (req, res) => {
   try {
-    const { pid, cid } = req.params;
+    const { id } = req.params;
 
+      if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ error: "Product does not exists!" });
+    }
     // Fetch the product by ID
-    const product = await Product.findById(pid).populate("category");
+    const product = await Product.findById(id).populate("category");
     if (!product) {
       return res.status(404).json({ error: "Product does not exist!" });
     }
 
-    // Fetch related products based on the category of the fetched product
     const relatedProducts = await Product.find({
-      category: cid, // Assuming `cId` is the category ID field in your Product schema
-      _id: { $ne: pid }, // Exclude the fetched product itself
-    });
+      category: product.category._id, 
+      _id: { $ne: product._id }, 
+    }).limit(4)
+    console.log(relatedProducts);
 
     res.status(200).json({ product, relatedProducts });
   } catch (err) {

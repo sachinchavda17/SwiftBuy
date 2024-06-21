@@ -14,8 +14,8 @@ const router = express.Router();
 router.post("/addproduct",  addProductController);
 router.post("/updateproduct/:pid",  updateProductController);
 router.patch("/removeproduct/:pid",  removeProductController);
-router.get("/getproduct/:pid",  getProductController);
 router.get("/getallproducts", getAllProductController);
+router.get("/getproduct/:id",  getProductController);
 router.get("/search/:query", getSearchProductController);
 
 export default router;

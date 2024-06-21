@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useContext, useState } from "react";
 import { Context } from "../../utils/context";
-import Loading from "../shared/Loading";
+import Loading from "../skeletons/Loading";
 import { useCookies } from "react-cookie";
 
 const Login = () => {

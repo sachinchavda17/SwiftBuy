@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Context } from "../../utils/context";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import toast from "react-hot-toast"
+import toast from "react-hot-toast";
+import Loading from "../skeletons/Loading";
 
 const CheckoutCart = ({ paymentMethod, shippingAddress }) => {
   const {
@@ -13,11 +14,14 @@ const CheckoutCart = ({ paymentMethod, shippingAddress }) => {
     handleCartProductQuantity,
     handleRemoveFromCart,
   } = useContext(Context);
+  const [isLoading, setIsLoading] = useState(false);
+
   const stripePromise = loadStripe(
     process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY
   );
 
   const handlePayment = async () => {
+    setIsLoading(true); // Set loading state to true when payment starts
     try {
       const stripe = await stripePromise;
       const response = await axios.post(
@@ -34,7 +38,9 @@ const CheckoutCart = ({ paymentMethod, shippingAddress }) => {
       const { id } = response.data.stripeSession;
       await stripe.redirectToCheckout({ sessionId: id });
     } catch (error) {
-      toast.error("Error during payment process!");
+      toast.error(error.message);
+    } finally {
+      setIsLoading(false); // Set loading state to false when payment ends
     }
   };
 
@@ -133,12 +139,18 @@ const CheckoutCart = ({ paymentMethod, shippingAddress }) => {
             Shipping and taxes calculated at checkout.
           </p>
           <div className="mt-6">
-            <div
-              onClick={handlePayment}
-              className="flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-primary dark:bg-secondary px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-            >
-              Order Now
-            </div>
+            {isLoading ? (
+              <div className="flex items-center justify-center rounded-md border border-transparent bg-primary dark:bg-secondary px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
+                <Loading />
+              </div>
+            ) : (
+              <div
+                onClick={handlePayment}
+                className="flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-primary dark:bg-secondary px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+              >
+                Order Now
+              </div>
+            )}
           </div>
           <div className="mt-6 flex justify-center text-center text-sm text-text dark:text-gray-400">
             <p>

@@ -1,5 +1,4 @@
-import { useContext, useState } from "react";
-
+import { useContext, useState, useEffect } from "react";
 import RelatedProducts from "./RelatedProducts/RelatedProducts";
 import {
   FaFacebookF,
@@ -11,39 +10,70 @@ import {
 } from "react-icons/fa";
 import "./SingleProduct.scss";
 import { useParams } from "react-router-dom";
-import useFetch from "../../hooks/useFetch";
+import { fetchDataFromApi } from "../../utils/api";
 import { Context } from "../../utils/context";
 import toast from "react-hot-toast";
+import SingleProductSkeleton from "../skeletons/SingleProductSkeleton";
+import ProductSkeleton from "../skeletons/ProductSkeleton";
 
 const SingleProduct = () => {
   const { id } = useParams();
-  const { data } = useFetch(`/api/products/getproduct/${id}`);
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
   const {
     handleAddToCart,
     quantity,
     setQuantity,
-    descrementQuantity,
+    decrementQuantity,
     incrementQuantity,
   } = useContext(Context);
 
-  if (!data) return null;
-  const product = data?.product;
-  console.log(data.relatedProducts);
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await fetchDataFromApi(
+          `/api/products/getproduct/${id}`
+        );
+        setData(response);
+        console.log(response);
+      } catch (error) {
+        console.error("Failed to fetch product:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
+
+  if (loading || !data) {
+    return (
+      <div className="single-product-main-content">
+        <div className="layout">
+          <SingleProductSkeleton />;
+          <ProductSkeleton />
+        </div>
+      </div>
+    );
+  }
+
+  const product = data.product;
+  const relatedProducts = data.relatedProducts;
 
   return (
     <div className="single-product-main-content">
       <div className="layout">
         <div className="single-product-page">
           <div className="left">
-            <img src={product?.img} alt="" />
+            <img src={product?.img} alt={product.title} />
           </div>
           <div className="right">
-            <span className="name">{product?.title}</span>
-            <span className="price">&#8377; {product?.price}</span>
-            <span className="desc">{product?.desc}</span>
+            <span className="name">{product.title}</span>
+            <span className="price">&#8377; {product.price}</span>
+            <span className="desc">{product.desc}</span>
             <div className="cart-buttons">
               <div className="quantity-buttons">
-                <span onClick={descrementQuantity}>-</span>
+                <span onClick={decrementQuantity}>-</span>
                 <span>{quantity}</span>
                 <span onClick={incrementQuantity}>+</span>
               </div>
@@ -63,7 +93,7 @@ const SingleProduct = () => {
 
             <div className="info-item">
               <div className="text-bolds">
-                Category : <span>{product?.category?.title}</span>
+                Category : <span>{product.category.title}</span>
               </div>
               <div className="text-bolds">
                 Share :
@@ -78,8 +108,8 @@ const SingleProduct = () => {
             </div>
           </div>
         </div>
-        {!!data.relatedProducts && (
-          <RelatedProducts data={data.relatedProducts} />
+        {relatedProducts && (
+          <RelatedProducts relatedProducts={relatedProducts} />
         )}
       </div>
     </div>

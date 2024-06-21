@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import "./Address.scss";
 import { fetchDataFromApi, fetchDataPost } from "../../utils/api";
 import { Context } from "../../utils/context";
-
+import toast from "react-hot-toast";
 const Address = ({ setAddress }) => {
   const {
     register,
@@ -17,16 +17,15 @@ const Address = ({ setAddress }) => {
     try {
       const response = await fetchDataPost("/api/auth/addaddress", {
         ...data,
-        userId: user._id, // Ensure user ID is included
+        userId: user._id, 
       });
-      setAddress(response.address)
-      console.log('Address added:', response);
-      reset(); // Uncomment if you want to reset the form after submission
+      setAddress(response.address);
+      toast.success("Address added.");
+      reset(); 
     } catch (error) {
-      console.error('Error adding address:', error);
+      toast.error(error);
     }
   };
-  
 
   return (
     <form

@@ -4,10 +4,12 @@ import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import debounce from "lodash.debounce";
+import SearchSkeleton from "../../skeletons/ItemSkeleton";
 
 const Search = ({ setShowSearch }) => {
   const [searchProducts, setSearchProducts] = useState([]);
   const [query, setQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,6 +25,7 @@ const Search = ({ setShowSearch }) => {
       return;
     }
     try {
+      setIsLoading(true);
       const response = await axios.get(
         `${process.env.REACT_APP_DEV_URL}/api/products/search/${searchQuery}`
       );
@@ -30,6 +33,8 @@ const Search = ({ setShowSearch }) => {
     } catch (error) {
       console.error("Error fetching search results:", error);
       setSearchProducts([]);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -54,7 +59,9 @@ const Search = ({ setShowSearch }) => {
       </div>
       <div className="search-result-content">
         <div className="search-results">
-          {searchProducts.length > 0 ? (
+          {isLoading ? (
+            <SearchSkeleton />
+          ) : searchProducts.length > 0 ? (
             searchProducts.map((item) => (
               <div
                 key={item._id}

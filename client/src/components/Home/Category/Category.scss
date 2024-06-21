@@ -16,7 +16,7 @@
         overflow: hidden;
 
         @include md {
-          width: calc(25% - 10px);
+          width: calc(25% - 15px);
         }
         img{
           width: 100%;

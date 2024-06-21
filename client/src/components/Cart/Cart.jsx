@@ -53,7 +53,9 @@ const Cart = ({ setShowCart }) => {
           <div className="empty-cart">
             <BsCartX />
             <span>No Products in cart.</span>
-            <button className="return-cta">RETURN TO SHOP</button>
+            <button className="return-cta" onClick={() => setShowCart(false)}>
+              RETURN TO SHOP
+            </button>
           </div>
         )}
       </div>
