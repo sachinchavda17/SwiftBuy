@@ -1,3 +1,4 @@
+import "./SingleProduct.scss";
 import { useContext, useState, useEffect } from "react";
 import RelatedProducts from "./RelatedProducts/RelatedProducts";
 import {
@@ -8,7 +9,6 @@ import {
   FaPinterest,
   FaCartPlus,
 } from "react-icons/fa";
-import "./SingleProduct.scss";
 import { useParams } from "react-router-dom";
 import { fetchDataFromApi } from "../../utils/api";
 import { Context } from "../../utils/context";
@@ -19,7 +19,7 @@ import ProductSkeleton from "../skeletons/ProductSkeleton";
 const SingleProduct = () => {
   const { id } = useParams();
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const {
     handleAddToCart,
     quantity,
@@ -31,6 +31,7 @@ const SingleProduct = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
+        setLoading(true);
         const response = await fetchDataFromApi(
           `/api/products/getproduct/${id}`
         );
@@ -51,7 +52,7 @@ const SingleProduct = () => {
       <div className="single-product-main-content">
         <div className="layout">
           <SingleProductSkeleton />;
-          <ProductSkeleton />
+          <ProductSkeleton length={4} />
         </div>
       </div>
     );

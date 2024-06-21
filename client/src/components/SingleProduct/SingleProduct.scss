@@ -110,7 +110,7 @@
             @include md {
               flex-grow: unset;
             }
-            &:hover{
+            &:hover {
               background-color: var(--secondary-color);
             }
           }
@@ -136,7 +136,7 @@
             font-weight: 400;
             color: #6b6b6b;
             margin-right: 10px;
-          padding-left: 5px;
+            padding-left: 5px;
           }
           .social-icons {
             display: flex;
@@ -149,7 +149,6 @@
           }
         }
       }
-
     }
   }
 }
