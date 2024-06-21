@@ -1,8 +1,4 @@
-$primary-color: #4f46e5;
-$primary-hover-color: #4338ca;
-$text-color: #111827;
-$subtext-color: #6b7280;
-$error-color: #dc2626;
+
 
 .address-form {
   background-color: var(--background-color);
@@ -66,7 +62,7 @@ $error-color: #dc2626;
               }
             }
             .error-message {
-              color: $error-color;
+              color: var(--error-color);
             }
           }
         }
@@ -84,24 +80,24 @@ $error-color: #dc2626;
         font-size: 0.875rem;
         font-weight: 500;
         line-height: 1.25rem;
-        color: $text-color;
+        color: var(--text-color);
       }
 
       .submit-button {
-        background-color: $primary-color;
+        background-color: var(--primary-color);
         padding: 0.75rem 1rem;
         border-radius: 0.375rem;
         color: #ffffff;
         box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 
         &:hover {
-          background-color: $primary-hover-color;
+          background-color: var(--secondary-color);
         }
 
         &:focus-visible {
           outline: 2px solid transparent;
           outline-offset: 2px;
-          outline-color: $primary-color;
+          outline-color: var(--primary-color);
         }
       }
     }

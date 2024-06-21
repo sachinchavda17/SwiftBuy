@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 import { useCookies } from "react-cookie";
 export const Context = createContext();
 
@@ -11,21 +11,20 @@ const AppContext = ({ children }) => {
   const [cartSubTotal, setCartSubTotal] = useState(0);
   const [user, setUser] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [isLogin, setIsLogin] = useState(false)
+  const [isLogin, setIsLogin] = useState(false);
   const [cookies, setCookie] = useCookies(["swiftbuyToken"]);
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("swiftbuyUser"))
+    const storedUser = JSON.parse(localStorage.getItem("swiftbuyUser"));
     if (cookies?.swiftbuyToken) {
-      setIsLogin(true)
-      setUser(storedUser?.user)
+      setIsLogin(true);
+      setUser(storedUser?.user);
     }
     if (storedUser?.user?.role === "admin") {
-      setIsAdmin(true)
+      setIsAdmin(true);
     }
-  }, [])
-
-
+  }, []);
 
   useEffect(() => {
     let count = 0;
@@ -68,6 +67,16 @@ const AppContext = ({ children }) => {
     setCartItems(items);
   };
 
+  const incrementQuantity = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const descrementQuantity = () => {
+    setQuantity((prevState) => {
+      if (prevState === 1) return 1;
+      else return prevState - 1;
+    });
+  };
   return (
     <Context.Provider
       value={{
@@ -86,7 +95,14 @@ const AppContext = ({ children }) => {
         handleCartProductQuantity,
         user,
         setUser,
-        isAdmin, setIsAdmin, isLogin, setIsLogin
+        isAdmin,
+        setIsAdmin,
+        isLogin,
+        setIsLogin,
+        incrementQuantity,
+        descrementQuantity,
+        quantity,
+        setQuantity,
       }}
     >
       {children}

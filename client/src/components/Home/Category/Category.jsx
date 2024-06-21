@@ -1,5 +1,4 @@
 import "./Category.scss";
-import Cat1 from "../../../assets/category/cat-1.jpg";
 import { useNavigate } from "react-router-dom";
 const Category = ({ categories }) => {
   const navigate = useNavigate();

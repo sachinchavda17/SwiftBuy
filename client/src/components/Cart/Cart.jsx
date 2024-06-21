@@ -37,7 +37,6 @@ const Cart = ({ setShowCart }) => {
                 <span className="text total">&#8377; {cartSubTotal} </span>
               </div>
               <div className="button">
-                {/* <div className="checkout-cta" onClick={handlePayment}> */}
                 <div
                   className="checkout-cta"
                   onClick={() => {

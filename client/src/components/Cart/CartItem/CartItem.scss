@@ -4,6 +4,7 @@
     padding: 20px 15px;
     display: flex;
     gap: 10px;
+    transition: .3s all;
     .img-container {
       background-color: var(--ternary-color);
       width: 60px;
@@ -36,6 +37,7 @@
         font-weight: 600;
         .highlight {
           color: var(--primary-color);
+
         }
       }
       svg {
@@ -75,5 +77,6 @@
     &:hover {
       background-color:  var(--ternary-color);
     }
+  
   }
 }

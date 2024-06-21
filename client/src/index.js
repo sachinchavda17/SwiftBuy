@@ -6,6 +6,7 @@ import AppContext from "./utils/context";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    <AppContext>
-        <App />
-    </AppContext>);
+  <AppContext>
+    <App />
+  </AppContext>
+);

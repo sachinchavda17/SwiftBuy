@@ -110,6 +110,9 @@
             @include md {
               flex-grow: unset;
             }
+            &:hover{
+              background-color: var(--secondary-color);
+            }
           }
         }
       }

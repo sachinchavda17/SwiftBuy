@@ -13,26 +13,23 @@ import "./SingleProduct.scss";
 import { useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import { Context } from "../../utils/context";
+import toast from "react-hot-toast";
 
 const SingleProduct = () => {
-  const [quantity, setQuantity] = useState(1);
   const { id } = useParams();
   const { data } = useFetch(`/api/products/getproduct/${id}`);
-  const { handleAddToCart } = useContext(Context);
+  const {
+    handleAddToCart,
+    quantity,
+    setQuantity,
+    descrementQuantity,
+    incrementQuantity,
+  } = useContext(Context);
 
-  if (!data) return null ;
+  if (!data) return null;
   const product = data?.product;
-console.log(data.relatedProducts)
-  const incrementQuantity = () => {
-    setQuantity(quantity + 1);
-  };
+  console.log(data.relatedProducts);
 
-  const descrementQuantity = () => {
-    setQuantity((prevState) => {
-      if (prevState === 1) return 1;
-      else return prevState - 1;
-    });
-  };
   return (
     <div className="single-product-main-content">
       <div className="layout">
@@ -55,6 +52,7 @@ console.log(data.relatedProducts)
                 onClick={() => {
                   handleAddToCart(product, quantity);
                   setQuantity(1);
+                  toast.success("Item added to cart ");
                 }}
               >
                 <FaCartPlus size={20} /> ADD TO CART
@@ -80,7 +78,7 @@ console.log(data.relatedProducts)
             </div>
           </div>
         </div>
-        {!!data.relatedProducts  && (
+        {!!data.relatedProducts && (
           <RelatedProducts data={data.relatedProducts} />
         )}
       </div>

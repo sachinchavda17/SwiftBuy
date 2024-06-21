@@ -2,36 +2,72 @@ import Category from "./Category/Category";
 import Products from "../Products/Products";
 import Banner from "./Banner/Banner";
 import "./Home.scss";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { fetchDataFromApi } from "../../utils/api";
 import { Context } from "../../utils/context";
-
+import toast from "react-hot-toast";
+import CategorySkeleton from "../skeletons/CategorySkeleton";
+import ProductSkeleton from "../skeletons/ProductSkeleton";
 const Home = () => {
   const { categories, setCategories, products, setProducts } =
     useContext(Context);
+  const [loadingCategories, setLoadingCategories] = useState(true);
+  const [loadingProducts, setLoadingProducts] = useState(true);
+
   useEffect(() => {
     getCategory();
     getProducts();
   }, []);
+
   const getCategory = () => {
-    fetchDataFromApi("/api/categories/getallcategories").then((res) => {
-      console.log(res);
-      setCategories(res.categories);
-    });
+    fetchDataFromApi("/api/categories/getallcategories")
+      .then((res) => {
+        setCategories(res.categories);
+      })
+      .catch((error) => {
+        toast.error("Error fetching categories:", error);
+      })
+      .finally(() => {
+        setLoadingCategories(false);
+      });
   };
+
   const getProducts = () => {
-    fetchDataFromApi("/api/products/getallproducts").then((res) => {
-      console.log(res);
-      setProducts(res.products);
-    });
+    fetchDataFromApi("/api/products/getallproducts")
+      .then((res) => {
+        setProducts(res.products);
+      })
+      .catch((error) => {
+        toast.error("Error fetching products:", error);
+      })
+      .finally(() => {
+        setLoadingProducts(false);
+      });
   };
+
   return (
     <div>
       <Banner />
       <div className="main-content">
         <div className="layout">
-          <Category categories={categories} />
-          <Products headingText={"Popular Products"} products={products} />
+          {loadingCategories ? (
+            <div className="flex my-9  flex-wrap  ">
+              {[...Array(4)].map((_, idx) => (
+                <CategorySkeleton key={idx} />
+              ))}
+            </div>
+          ) : (
+            <Category categories={categories} />
+          )}
+          {loadingProducts ? (
+            <div className="flex my-20 gap-4 flex-wrap ">
+              {[...Array(4)].map((_, idx) => (
+                <ProductSkeleton key={idx} />
+              ))}
+            </div>
+          ) : (
+            <Products headingText={"Popular Products"} products={products} />
+          )}
         </div>
       </div>
     </div>

@@ -49,6 +49,7 @@
         align-items: center;
         gap: 5px;
         cursor: pointer;
+        transition: .3s all ;
         svg {
           font-size: 18px;
         }
@@ -120,6 +121,10 @@
           font-size: 16px;
           background-color: var(--primary-color);
           border-bottom: 3px solid var(--secondary-color);
+          transition: .3s all ;
+          &:hover {
+            background-color: var(--secondary-color);
+          }
         }
       }
     }
