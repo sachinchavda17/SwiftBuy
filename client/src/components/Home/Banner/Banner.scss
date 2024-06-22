@@ -44,7 +44,7 @@
       }
     }
     .text-content {
-      color: var(--text-color);
+      color: whitesmoke;
       text-align: center;
       display: flex;
       flex-direction: column;
@@ -63,7 +63,7 @@
         font-size: 70px;
         font-weight: 700;
         line-height: 1;
-        color: var(--text-color);
+        color: whitesmoke;
         margin-bottom: 20px;
         @include md {
           font-size: 120px;
@@ -93,13 +93,14 @@
           font-size: 13px;
           font-weight: 500;
           width: fit-content;
-          border: 2px solid var(--text-color);
+          border: 2px solid whitesmoke;
           padding: 10px 20px;
           transition: all ease 0.3s;
           cursor: pointer;
           &.v2 {
-            background-color: var(--text-color);
-            color: var(--background-color);
+            background-color: whitesmoke;
+            color: black;
+            font-weight: 500;
           }
           &:hover {
             opacity: 0.6;

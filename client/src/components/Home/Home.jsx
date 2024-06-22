@@ -1,4 +1,4 @@
-import Category from "./Category/Category";
+import Category from "./HomeCategory/HomeCategory";
 import Products from "../Products/Products";
 import Banner from "./Banner/Banner";
 import "./Home.scss";
@@ -53,12 +53,12 @@ const Home = () => {
           {loadingCategories ? (
             <CategorySkeleton />
           ) : (
-            <Category categories={categories} />
+            <Category categories={categories} update={false}/>
           )}
           {loadingProducts ? (
             <ProductSkeleton />
           ) : (
-            <Products headingText={"Popular Products"} products={products} />
+            <Products headingText={"Popular Products"} products={products} update={false} />
           )}
         </div>
       </div>

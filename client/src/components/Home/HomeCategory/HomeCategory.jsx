@@ -1,6 +1,6 @@
-import "./Category.scss";
+import "./HomeCategory.scss";
 import { useNavigate } from "react-router-dom";
-const Category = ({ categories }) => {
+const HomeCategory = ({ categories }) => {
   const navigate = useNavigate();
   return (
     <div className="shop-by-category">
@@ -19,4 +19,4 @@ const Category = ({ categories }) => {
   );
 };
 
-export default Category;
+export default HomeCategory;

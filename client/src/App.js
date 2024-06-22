@@ -15,6 +15,9 @@ import AdminHome from "./components/Admin/AdminHome";
 import PaymentConfirmation from "./components/Checkout/PaymentConfirmation";
 import PaymentCancel from "./components/Checkout/PaymentCancel";
 import ScrollToTop from "./utils/ScrollToTop";
+import AdminHeader from "./components/Admin/AdminHeader";
+import AddCategory from "./components/Admin/AddCategory";
+import AddProduct from "./components/Admin/AddProduct";
 
 const App = () => {
   const [cookies] = useCookies(["swiftbuyToken"]);
@@ -25,26 +28,13 @@ const App = () => {
       <ScrollToTop>
         {!cookies.swiftbuyToken ? (
           <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="*" element={<Navigate to="/login" />} />
+            <Route path="/*" element={AuthRoute()} />
           </Routes>
         ) : (
-          <>
-            <Header />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/product/:id" element={<SingleProduct />} />
-              <Route path="/category/:id" element={<Category />} />
-              <Route path="/check" element={<Checkout />} />
-              <Route path="/success" element={<PaymentConfirmation />} />
-              <Route path="/cancel" element={<PaymentCancel />} />
-              <Route path="/admin" element={<AdminHome />} />
-              <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
-            <Newsletter />
-            <Footer />
-          </>
+          <Routes>
+            <Route path="/*" element={UserRoute()} />
+            <Route path="/admin/*" element={AdminRoute()} />
+          </Routes>
         )}
       </ScrollToTop>
     </BrowserRouter>
@@ -52,3 +42,48 @@ const App = () => {
 };
 
 export default App;
+
+const AdminRoute = () => {
+  return (
+    <>
+      <AdminHeader />
+      <Routes>
+        <Route path="/" element={<AdminHome />} />
+        <Route path="/add-category" element={<AddCategory />} />
+        <Route path="/add-category/:id" element={<AddCategory />} />
+        <Route path="/add-product" element={<AddProduct />} />
+        <Route path="/update-product/:id" element={<AddProduct />} />
+      </Routes>
+      <Footer />
+    </>
+  );
+};
+
+const AuthRoute = () => {
+  return (
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route path="*" element={<Navigate to="/login" />} />
+    </Routes>
+  );
+};
+
+const UserRoute = () => {
+  return (
+    <>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/product/:id" element={<SingleProduct />} />
+        <Route path="/category/:id" element={<Category />} />
+        <Route path="/check" element={<Checkout />} />
+        <Route path="/success" element={<PaymentConfirmation />} />
+        <Route path="/cancel" element={<PaymentCancel />} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+      <Newsletter />
+      <Footer />
+    </>
+  );
+};

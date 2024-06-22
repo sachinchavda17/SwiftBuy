@@ -80,6 +80,24 @@ export const updateProductController = async (req, res) => {
       return res.status(404).json({ error: "Product doesn't exist!" });
     }
 
+    // Check if the new category exists
+    const category = await Category.findById(cId);
+    if (!category) {
+      return res.status(400).json({ error: "Category does not exist!" });
+    }
+
+    // If category is being changed, update the product arrays in the categories
+    if (product.category.toString() !== cId) {
+      await Category.updateOne(
+        { _id: product.category },
+        { $pull: { products: pid } }
+      );
+
+      category.products.push(pid);
+      await category.save();
+    }
+
+    // Update the product
     const updatedProduct = await Product.findByIdAndUpdate(
       pid,
       {
@@ -97,7 +115,7 @@ export const updateProductController = async (req, res) => {
 
     res.status(200).json({ product: updatedProduct });
   } catch (err) {
-    console.log("Error in updating product " + err.message);
+    console.log("Error in updating product: " + err.message);
     res.status(500).json({ error: "Internal Server Error!" });
   }
 };
@@ -117,7 +135,7 @@ export const removeProductController = async (req, res) => {
     );
 
     await Product.deleteOne({ _id: pid });
-    res.status(200).json({ message: "Successfully Deleted." });
+    res.status(200).json({ message: "Successfully deleted." });
   } catch (err) {
     console.log("Error in removing product: " + err.message);
     res.status(500).json({ error: "Internal Server Error!" });
@@ -128,9 +146,10 @@ export const getProductController = async (req, res) => {
   try {
     const { id } = req.params;
 
-      if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({ error: "Product does not exists!" });
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Product does not exist!" });
     }
+
     // Fetch the product by ID
     const product = await Product.findById(id).populate("category");
     if (!product) {
@@ -138,14 +157,13 @@ export const getProductController = async (req, res) => {
     }
 
     const relatedProducts = await Product.find({
-      category: product.category._id, 
-      _id: { $ne: product._id }, 
-    }).limit(4)
-    console.log(relatedProducts);
+      category: product.category._id,
+      _id: { $ne: product._id },
+    }).limit(4);
 
     res.status(200).json({ product, relatedProducts });
   } catch (err) {
-    console.log("Error in getting related products: " + err.message);
+    console.log("Error in getting product: " + err.message);
     res.status(500).json({ error: "Internal Server Error!" });
   }
 };
@@ -174,7 +192,7 @@ export const getSearchProductController = async (req, res) => {
     }
     res.status(200).json({ products });
   } catch (err) {
-    console.log("Error in getting search products: " + err.message);
+    console.log("Error in searching products: " + err.message);
     res.status(500).json({ error: "Internal Server Error!" });
   }
 };

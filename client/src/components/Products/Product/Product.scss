@@ -1,8 +1,12 @@
 @import "../../../css-config/mixins.scss";
 
+
 .product-card {
   width: calc(50% - 5px);
   margin-bottom: 20px;
+  box-shadow: 0 0 10px  var(--forth-color);
+  padding: 5px ;
+  border-radius: 5px ;
   @include md {
     width: calc(25% - 15px);
   }
@@ -42,6 +46,18 @@
         font-size: 24px;
       }
     }
+  }
+  .edit-cta {
+    margin-top: 5px ;
+    background: var(--primary-color);
+    padding: 7px 10px;
+    border-radius: 5px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
   }
   &:hover {
     .thumnail {
