@@ -39,7 +39,7 @@ const SignupModal = () => {
       // Save the token in a cookie
       Cookies.set("swiftbuyToken", data.token, { expires: 2 }); // Expires in 2 days
 
-      localStorage.setItem("swiftbuyUser", JSON.stringify(data));
+      localStorage.setItem("swiftbuyUser", JSON.stringify(data.user));
       toast.success("Signup successful!");
       navigate("/");
     } catch (error) {

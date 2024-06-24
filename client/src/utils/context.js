@@ -19,9 +19,9 @@ const AppContext = ({ children }) => {
     const storedUser = JSON.parse(localStorage.getItem("swiftbuyUser"));
     if (cookies?.swiftbuyToken) {
       setIsLogin(true);
-      setUser(storedUser?.user);
+      setUser(storedUser);
     }
-    if (storedUser?.user?.role === "admin") {
+    if (storedUser?.role === "admin") {
       setIsAdmin(true);
     }
   }, []);

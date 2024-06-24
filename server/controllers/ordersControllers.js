@@ -1,6 +1,7 @@
 import Order from "../models/Order.js";
 import Stripe from "stripe";
 import dotenv from "dotenv";
+import User from "../models/User.js";
 
 // Load environment variables
 dotenv.config();
@@ -20,6 +21,9 @@ export const addOrderController = async (req, res) => {
         .status(400)
         .json({ error: "Payment method and shipping address are required" });
     }
+
+    const user = await User.findById(userId);
+    if (!user) return res.status(400).json({ error: "User does not exist!" });
 
     const lineItems = products.map((product) => ({
       price_data: {
@@ -55,6 +59,7 @@ export const addOrderController = async (req, res) => {
     });
 
     await newOrder.save();
+    user.order
 
     res.status(200).json({ orderId: newOrder._id, stripeSession: session });
   } catch (error) {

@@ -5,7 +5,7 @@ import {
 } from "../controllers/authController.js";
 import protectedRoute from "../utils/protectedRoute.js";
 import {
-  addressController,
+  addAddressController,
   getAddressController,
 } from "../controllers/addressController.js";
 
@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.post("/signup", signupController);
 router.post("/login", loginController);
-router.post("/addaddress", addressController);
+router.post("/addaddress", addAddressController);
 router.get("/getaddress/:userId", getAddressController);
 
 export default router;

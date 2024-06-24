@@ -27,6 +27,16 @@ const UserSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
+    orders: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Order",
+      default: [],
+    },
+    carts: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Cart",
+      default: [],
+    },
   },
   { timestamps: true }
 );

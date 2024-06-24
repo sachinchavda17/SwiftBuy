@@ -13,8 +13,8 @@ const productSchema = new mongoose.Schema({
   img: String,
   category: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Category'
-  }
+    ref: "Category",
+  },
 });
 
 const Product = mongoose.model("Product", productSchema);

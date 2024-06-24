@@ -36,6 +36,7 @@ const OrderSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    
     deliveryDate: Date,
 
     totalAmount: {

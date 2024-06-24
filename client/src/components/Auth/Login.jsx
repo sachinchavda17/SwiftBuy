@@ -43,7 +43,7 @@ const Login = () => {
       setUser(data.user);
       toast.success("Login successful!");
       setTimeout(() => {
-        localStorage.setItem("swiftbuyUser", JSON.stringify(data));
+        localStorage.setItem("swiftbuyUser", JSON.stringify(data.user));
         setCookie("swiftbuyToken", token, { path: "/", expires: date });
         window.location.reload();
         navigate("/");

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import AdminHeader from "./AdminHeader";
+import AdminHeader from "../Header/AdminHeader";
 import Banner from "../Home/Banner/Banner";
 import HomeCategory from "../Home/HomeCategory/HomeCategory";
 import { Context } from "../../utils/context";

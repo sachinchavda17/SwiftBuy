@@ -49,7 +49,7 @@ const Header = () => {
 
   return (
     <>
-      <header className={`main-header ${scroll ? "main-header" : ""}`}>
+      <header className={`main-header ${scroll ? "sticky-header" : ""}`}>
         <div className="header-content">
           <div className="left">
             <span className="hamburger" onClick={handleSidebarToggle}>
@@ -62,37 +62,33 @@ const Header = () => {
                   showSidebar && setShowSidebar(false);
                 }}
               >
+                User
+              </li>
+              <li
+                onClick={() => {
+                  navigate("/admin");
+                  showSidebar && setShowSidebar(false);
+                }}
+              >
                 Home
               </li>
-              {!user ? (
-                <li
-                  onClick={() => {
-                    navigate("/login");
-                    showSidebar && setShowSidebar(false);
-                  }}
-                >
-                  Login
-                </li>
-              ) : (
-                <li
-                  onClick={() => {
-                    handleLogout();
-                    showSidebar && setShowSidebar(false);
-                  }}
-                >
-                  Logout
-                </li>
-              )}
-              {isAdmin && (
-                <li
-                  onClick={() => {
-                    navigate("/admin");
-                    showSidebar && setShowSidebar(false);
-                  }}
-                >
-                  Admin
-                </li>
-              )}
+              <li
+                onClick={() => {
+                  navigate("/admin/add-category");
+                  showSidebar && setShowSidebar(false);
+                }}
+              >
+                Add Category
+              </li>
+              <li
+                onClick={() => {
+                  navigate("/admin/add-product");
+                  showSidebar && setShowSidebar(false);
+                }}
+              >
+                Add Product
+              </li>
+              <li onClick={handleLogout}>Logout</li>
             </ul>
           </div>
           <div className="center" onClick={() => navigate("/")}>

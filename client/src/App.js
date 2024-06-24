@@ -15,7 +15,7 @@ import AdminHome from "./components/Admin/AdminHome";
 import PaymentConfirmation from "./components/Checkout/PaymentConfirmation";
 import PaymentCancel from "./components/Checkout/PaymentCancel";
 import ScrollToTop from "./utils/ScrollToTop";
-import AdminHeader from "./components/Admin/AdminHeader";
+import AdminHeader from "./components/Header/AdminHeader";
 import AddCategory from "./components/Admin/AddCategory";
 import AddProduct from "./components/Admin/AddProduct";
 

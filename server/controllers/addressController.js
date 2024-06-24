@@ -1,7 +1,7 @@
 import User from "../models/User.js";
 
 // Add new address
-export const addressController = async (req, res) => {
+export const addAddressController = async (req, res) => {
   try {
     const { userId, phone, street, city, state, pincode, email } = req.body;
 
@@ -23,7 +23,6 @@ export const addressController = async (req, res) => {
   }
 };
 
-// Get addresses for a user
 export const getAddressController = async (req, res) => {
   try {
     const { userId } = req.params;
