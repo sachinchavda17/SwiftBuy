@@ -21,7 +21,7 @@
     height: 50px;
     max-width: 1200px;
     margin: 0 auto;
-  
+
     @include md {
       height: 80px;
     }
@@ -149,15 +149,26 @@
     }
   }
 
-  &.sticky-header {
-    position: sticky;
-    top: 0;
+  &.fixed-header {
+    position: fixed;
     transform: translateY(-60px);
-    animation: StickyHeader 0.3s ease forwards;
+    animation: fixedHeader 0.3s ease forwards;
+    .menu {
+      display: none;
+
+      &.open {
+        top: 50px;
+        display: flex;
+      }
+
+      @include md {
+        display: flex;
+      }
+    }
   }
 }
 
-@keyframes StickyHeader {
+@keyframes fixedHeader {
   0% {
     transform: translateY(-60px);
   }

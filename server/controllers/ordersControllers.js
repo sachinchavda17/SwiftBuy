@@ -59,7 +59,8 @@ export const addOrderController = async (req, res) => {
     });
 
     await newOrder.save();
-    user.order
+    user.orders.push(newOrder._id);
+    await User.save();
 
     res.status(200).json({ orderId: newOrder._id, stripeSession: session });
   } catch (error) {

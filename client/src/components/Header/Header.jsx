@@ -24,16 +24,16 @@ const Header = () => {
 
   const handleScroll = () => {
     const offset = window.scrollY;
+    setScroll(offset > 100);
     if (showSidebar) {
       setShowSidebar(false);
     }
-    setScroll(offset > 50);
   };
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [showSidebar]);
 
   const handleLogout = () => {
     Cookies.remove("swiftbuyToken");
@@ -41,6 +41,7 @@ const Header = () => {
     setIsAdmin(false);
     setIsLogin(false);
     setUser(null);
+    navigate("/");
   };
 
   const handleSidebarToggle = () => {
@@ -49,7 +50,7 @@ const Header = () => {
 
   return (
     <>
-      <header className={`main-header ${scroll ? "main-header" : ""}`}>
+      <header className={`main-header ${scroll ? "fixed-header" : ""}`}>
         <div className="header-content">
           <div className="left">
             <span className="hamburger" onClick={handleSidebarToggle}>

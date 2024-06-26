@@ -83,7 +83,7 @@ const SingleProduct = () => {
                 onClick={() => {
                   handleAddToCart(product, quantity);
                   setQuantity(1);
-                  toast.success("Item added to cart ");
+                  
                 }}
               >
                 <FaCartPlus size={20} /> ADD TO CART

@@ -24,10 +24,10 @@ const Header = () => {
 
   const handleScroll = () => {
     const offset = window.scrollY;
+    setScroll(offset > 100);
     if (showSidebar) {
       setShowSidebar(false);
     }
-    setScroll(offset > 50);
   };
 
   useEffect(() => {
@@ -49,7 +49,7 @@ const Header = () => {
 
   return (
     <>
-      <header className={`main-header ${scroll ? "sticky-header" : ""}`}>
+      <header className={`main-header ${scroll ? "fixed-header" : ""}`}>
         <div className="header-content">
           <div className="left">
             <span className="hamburger" onClick={handleSidebarToggle}>

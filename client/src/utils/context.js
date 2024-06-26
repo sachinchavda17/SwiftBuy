@@ -1,6 +1,9 @@
 import { createContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { useCookies } from "react-cookie";
+import { fetchDataFromApi, fetchDataPost } from "./api";
+import toast from "react-hot-toast";
+import axios from "axios";
 export const Context = createContext();
 
 const AppContext = ({ children }) => {
@@ -27,38 +30,76 @@ const AppContext = ({ children }) => {
   }, []);
 
 
+
   useEffect(() => {
     let count = 0;
     cartItems.forEach((item) => (count += item.quantity));
     setCartCount(count);
 
     let subTotal = 0;
+    console.log(cartItems);
     // cartItems.map((item)=>subTotal += item.price * item.quantity)
-    cartItems.forEach((item) => (subTotal += item.price * item.quantity));
+    cartItems.forEach(
+      (item) => (subTotal += item.product.price * item.quantity)
+    );
     setCartSubTotal(subTotal);
   }, [cartItems]);
 
-  const handleAddToCart = (product, quantity) => {
-    let items = [...cartItems];
-    let index = items?.findIndex((p) => p._id === product?._id);
-    if (index !== -1) {
-      items[index].quantity += quantity;
-    } else {
-      product.quantity = quantity;
-      items = [...items, product];
+  const handleAddToCart = async (product, quantity) => {
+    try {
+      const response = await fetchDataPost(`/api/carts/add-cart/${user._id}`, {
+        pId: product._id,
+        quantity,
+      });
+
+      if (response && response.cart) {
+        let items = [...cartItems];
+        let index = items.findIndex((p) => p.product._id === product._id);
+        if (index !== -1) {
+          items[index].quantity += quantity;
+        } else {
+          items = [...items, { ...response.cart, product }];
+        }
+        setCartItems(items);
+        toast.success("Item added to cart");
+      } else {
+        toast.error(response?.response?.data?.error || "Add to cart failed!");
+      }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      toast.error("Add to cart failed!");
     }
-    setCartItems(items);
   };
 
-  const handleRemoveFromCart = (product) => {
-    let items = [...cartItems];
-    items = items?.filter((p) => p._id !== product._id);
-    setCartItems(items);
+  const handleRemoveFromCart = async (product) => {
+    try {
+      const response = await axios.delete(
+        `${process.env.REACT_APP_DEV_URL}/api/carts/remove-cart/${user._id}/${product._id}`
+      );
+
+      if (response.status === 200 && response.data.success) {
+        let items = [...cartItems];
+        items = items.filter((p) => p.product._id !== product._id);
+        setCartItems(items);
+        toast.success("Item successfully removed from cart");
+      } else {
+        toast.error(
+          response?.data?.error || "Failed to remove item from cart!"
+        );
+        console.error(
+          "Failed to remove item from cart:",
+          response?.data?.error
+        );
+      }
+    } catch (err) {
+      toast.error("Error in removing item from cart");
+      console.error("Error in removing item from cart:", err.message);
+    }
   };
 
   const handleCartProductQuantity = (type, product) => {
     let items = [...cartItems];
-    let index = items.findIndex((p) => p._id === product._id);
+    let index = items.findIndex((p) => p.product._id === product.product._id);
     if (type === "inc") {
       items[index].quantity += 1;
     } else if (type === "dec") {

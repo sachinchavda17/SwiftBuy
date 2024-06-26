@@ -1,4 +1,4 @@
-
+@import "../../css-config/mixins.scss";
 
 .address-form {
   background-color: var(--background-color);
@@ -7,7 +7,7 @@
 
   .address-content {
     .address-handle {
-      border-bottom: 1px solid #d1d5db; 
+      border-bottom: 1px solid #d1d5db;
       padding-bottom: 3rem;
 
       .header-title {
@@ -26,9 +26,11 @@
       .input-grid {
         margin-top: 2.5rem;
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(1, 1fr);
         gap: 1.5rem;
-
+        @include md {
+          grid-template-columns: repeat(2, 1fr);
+        }
         .input-group {
           &.col-span-full {
             grid-column: span 6 / span 6;

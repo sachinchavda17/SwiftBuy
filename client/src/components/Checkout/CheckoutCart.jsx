@@ -16,6 +16,8 @@ const CheckoutCart = ({ paymentMethod, shippingAddress }) => {
   } = useContext(Context);
   const [isLoading, setIsLoading] = useState(false);
 
+  console.log(cartItems);
+
   const stripePromise = loadStripe(
     process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY
   );
@@ -60,8 +62,8 @@ const CheckoutCart = ({ paymentMethod, shippingAddress }) => {
                 <li key={id} className="flex py-6">
                   <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-border dark:border-ternary">
                     <img
-                      src={item.img}
-                      alt={item.title}
+                      src={item?.product?.img}
+                      alt={item?.product?.title}
                       className="h-full w-full object-cover object-center"
                     />
                   </div>
@@ -70,12 +72,12 @@ const CheckoutCart = ({ paymentMethod, shippingAddress }) => {
                     <div>
                       <div className="flex justify-between text-base font-medium text-text dark:text-white">
                         <h3>
-                          <Link href={item.img}>{item.title}</Link>
+                          <Link href={item?.product?.img}>{item.title}</Link>
                         </h3>
-                        <p className="ml-4">₹ {item.price}</p>
+                        <p className="ml-4">₹ {item?.product?.price}</p>
                       </div>
                       <p className="mt-1 text-sm text-text dark:text-gray-400">
-                        {item.category.title}
+                        {item.category}
                       </p>
                     </div>
                     <div className="flex flex-1 items-end justify-between text-sm my-1">

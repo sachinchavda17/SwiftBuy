@@ -10,7 +10,7 @@ import AddressSkeleton from "../skeletons/AddressSkeleton";
 const Checkout = () => {
   const { user, cartItems } = useContext(Context);
   const [address, setAddress] = useState([]);
-  const [paymentMethod, setPaymentMethod] = useState("cash");
+  const [paymentMethod, setPaymentMethod] = useState();
   const [shippingAddress, setShippingAddress] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -23,7 +23,7 @@ const Checkout = () => {
           );
           setAddress(addresses);
           if (addresses.length > 0) {
-            setShippingAddress(addresses[0]); // Set the first address as default
+            setShippingAddress(addresses[0]);
           }
         }
       } catch (error) {
@@ -37,6 +37,7 @@ const Checkout = () => {
     fetchAddresses();
   }, [user]);
 
+
   if (cartItems.length === 0) return <Navigate to="/" />;
 
   return (
@@ -44,6 +45,7 @@ const Checkout = () => {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 bg-background dark:bg-secondary">
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
           <div className="lg:col-span-3">
+            
             <Address setAddress={setAddress} />
             <div className="border-b border-border dark:border-ternary pb-12">
               <h2 className="text-base font-semibold leading-7 text-text dark:text-white">

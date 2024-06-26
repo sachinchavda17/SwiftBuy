@@ -6,6 +6,7 @@ import authRoutes from "./routes/auth.js"
 import categoriesRoutes from "./routes/categories.js"
 import productsRoutes from "./routes/products.js"
 import ordersRoutes from "./routes/orders.js"
+import cartsRoutes from "./routes/cart.js"
 import bodyParser from "body-parser";
 import Product from "./models/Product.js";
 import {products} from "./data.js"
@@ -26,6 +27,7 @@ app.use("/api/auth",authRoutes)
 app.use("/api/categories",categoriesRoutes)
 app.use("/api/products",productsRoutes)
 app.use("/api/orders",ordersRoutes)
+app.use("/api/carts",cartsRoutes)
 
 // await Product.insertMany(products)
 

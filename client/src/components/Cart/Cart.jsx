@@ -1,21 +1,41 @@
-import "./Cart.scss";
-import { MdClose } from "react-icons/md";
-import { BsCartX } from "react-icons/bs";
-import CartItem from "./CartItem/CartItem";
+import "./Cart.scss"
 import { useContext, useEffect } from "react";
 import { Context } from "../../utils/context";
-
 import { useNavigate } from "react-router-dom";
-
+import { fetchDataFromApi } from "../../utils/api";
+import CartItem from "./CartItem/CartItem";
+import toast from "react-hot-toast";
+import { BsCartX } from "react-icons/bs";
+import { MdClose } from "react-icons/md";
 const Cart = ({ setShowCart }) => {
   const navigate = useNavigate();
-  const { cartSubTotal, cartItems, user } = useContext(Context);
+  const { cartSubTotal, cartItems, setCartItems, user } = useContext(Context);
+
   useEffect(() => {
     document.body.style.overflowY = "hidden";
     return () => {
       document.body.style.overflowY = "scroll";
     };
   }, []);
+
+  useEffect(() => {
+    getCart();
+  }, []);
+
+  const getCart = async () => {
+    try {
+      const cart = await fetchDataFromApi(`/api/carts/get-cart/${user._id}`);
+      setCartItems(cart.cart);
+      let subTotal = 0;
+      cart.cart.forEach((item) => {
+        subTotal += item.product.price * item.quantity;
+      });
+      console.log(subTotal);
+    } catch (error) {
+      console.log(error);
+      toast.error(error);
+    }
+  };
 
   return (
     <div className="cart-panel">
