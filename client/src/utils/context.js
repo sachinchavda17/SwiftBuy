@@ -29,8 +29,6 @@ const AppContext = ({ children }) => {
     }
   }, []);
 
-
-
   useEffect(() => {
     let count = 0;
     cartItems.forEach((item) => (count += item.quantity));
@@ -54,7 +52,7 @@ const AppContext = ({ children }) => {
 
       if (response && response.cart) {
         let items = [...cartItems];
-        let index = items.findIndex((p) => p.product._id === product._id);
+        let index = items.findIndex((p) => p.product._id === product.product._id);
         if (index !== -1) {
           items[index].quantity += quantity;
         } else {
@@ -71,24 +69,25 @@ const AppContext = ({ children }) => {
     }
   };
 
-  const handleRemoveFromCart = async (product) => {
+  const handleRemoveFromCart = async (cartItem) => {
     try {
       const response = await axios.delete(
-        `${process.env.REACT_APP_DEV_URL}/api/carts/remove-cart/${user._id}/${product._id}`
+        `${process.env.REACT_APP_DEV_URL}/api/carts/remove-cart/${user._id}/${cartItem.product._id}`
       );
 
       if (response.status === 200 && response.data.success) {
         let items = [...cartItems];
-        items = items.filter((p) => p.product._id !== product._id);
+        console.log(items);
+        items = items.filter((p) => p.product._id !== cartItem.product._id);
         setCartItems(items);
         toast.success("Item successfully removed from cart");
       } else {
         toast.error(
-          response?.data?.error || "Failed to remove item from cart!"
+          response?.response?.data?.error || "Failed to remove item from cart!"
         );
         console.error(
           "Failed to remove item from cart:",
-          response?.data?.error
+          response?.response?.data?.error
         );
       }
     } catch (err) {
@@ -97,9 +96,9 @@ const AppContext = ({ children }) => {
     }
   };
 
-  const handleCartProductQuantity = (type, product) => {
+  const handleCartProductQuantity = (type, cart) => {
     let items = [...cartItems];
-    let index = items.findIndex((p) => p.product._id === product.product._id);
+    let index = items.findIndex((p) => p.product._id === cart.product._id);
     if (type === "inc") {
       items[index].quantity += 1;
     } else if (type === "dec") {

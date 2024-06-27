@@ -1,4 +1,4 @@
-import "./Cart.scss"
+import "./Cart.scss";
 import { useContext, useEffect } from "react";
 import { Context } from "../../utils/context";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +9,8 @@ import { BsCartX } from "react-icons/bs";
 import { MdClose } from "react-icons/md";
 const Cart = ({ setShowCart }) => {
   const navigate = useNavigate();
-  const { cartSubTotal, cartItems, setCartItems, user } = useContext(Context);
+  const { cartSubTotal, setCartSubTotal, cartItems, setCartItems, user } =
+    useContext(Context);
 
   useEffect(() => {
     document.body.style.overflowY = "hidden";
@@ -25,15 +26,22 @@ const Cart = ({ setShowCart }) => {
   const getCart = async () => {
     try {
       const cart = await fetchDataFromApi(`/api/carts/get-cart/${user._id}`);
-      setCartItems(cart.cart);
-      let subTotal = 0;
-      cart.cart.forEach((item) => {
-        subTotal += item.product.price * item.quantity;
-      });
-      console.log(subTotal);
+      if (cart && cart?.response?.data?.empty) {
+        throw new Error(cart?.response?.data?.empty);
+      }
+      if (cart && cart.cart) {
+        setCartItems(cart.cart);
+        let subTotal = 0;
+        cart.cart.forEach((item) => {
+          subTotal += item.product.price * item.quantity;
+        });
+        setCartSubTotal(subTotal);
+      } else {
+        throw new Error("Cart data is not valid.");
+      }
     } catch (error) {
       console.log(error);
-      toast.error(error);
+      toast.error(error.message || "Failed to fetch cart data.");
     }
   };
 

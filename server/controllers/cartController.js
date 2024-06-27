@@ -47,7 +47,7 @@ export const getUserCartController = async (req, res) => {
     if (!user) return res.status(404).json({ error: "User doesn't exist!" });
 
     const cart = await Cart.find({ user: userId }).populate("product");
-    if (!cart.length) return res.status(404).json({ error: "Cart is empty!" });
+    if (!cart.length) return res.status(404).json({ empty: "Cart is empty!" });
 
     res.status(200).json({ cart });
   } catch (err) {
@@ -67,7 +67,6 @@ export const removeCartController = async (req, res) => {
       user: userId,
       product: productId,
     });
-
     if (!cartItem)
       return res.status(404).json({ error: "Product not found in cart!" });
 

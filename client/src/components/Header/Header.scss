@@ -151,6 +151,8 @@
 
   &.fixed-header {
     position: fixed;
+    top: 0;
+    left: 0;
     transform: translateY(-60px);
     animation: fixedHeader 0.3s ease forwards;
     .menu {
