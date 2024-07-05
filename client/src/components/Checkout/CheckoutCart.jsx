@@ -22,24 +22,28 @@ const CheckoutCart = ({ paymentMethod, shippingAddress }) => {
 
   const handlePayment = async () => {
     setIsLoading(true);
-
+  
     try {
       if (!paymentMethod || !shippingAddress || !cartItems) {
         return toast.error("Please fill all the fields!");
       }
-      console.log(cartItems);
+  
+      const requestData = {
+        userId: user._id,
+        products: cartItems,
+        paymentMethod,
+        shippingAddress,
+        totalAmount: cartSubTotal,
+      };
+      
+      console.log("Request Data:", requestData);
+  
       const stripe = await stripePromise;
       const response = await axios.post(
         `${process.env.REACT_APP_DEV_URL}/api/orders/addorders`,
-        {
-          userId: user._id,
-          products: cartItems.product,
-          paymentMethod,
-          shippingAddress,
-          totalAmount: cartSubTotal,
-        }
+        requestData
       );
-
+  
       localStorage.setItem("orderData", JSON.stringify(response));
       const { id } = response.data.stripeSession;
       await stripe.redirectToCheckout({ sessionId: id });
@@ -49,7 +53,7 @@ const CheckoutCart = ({ paymentMethod, shippingAddress }) => {
       setIsLoading(false); // Set loading state to false when payment ends
     }
   };
-
+  
   return (
     <div className="lg:col-span-2">
       <div className="mx-auto mt-12 bg-background dark:bg-secondary px-2 sm:px-2 lg:px-4">

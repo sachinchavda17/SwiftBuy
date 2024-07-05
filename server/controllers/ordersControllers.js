@@ -14,6 +14,8 @@ export const addOrderController = async (req, res) => {
     const { userId, products, paymentMethod, shippingAddress, totalAmount } =
       req.body;
 
+    console.log("Received Data:", req.body);
+
     if (!products || products.length === 0) {
       return res.status(400).json({ error: "No products in the order" });
     }
@@ -47,14 +49,14 @@ export const addOrderController = async (req, res) => {
     });
 
     const newOrder = new Order({
-      user:userId, // Assuming 'user' field is defined in your Order schema
+      user: userId,
       products,
       paymentMethod,
       shippingAddress,
       totalAmount,
-      paymentStatus: "Pending",
-      shippingStatus: "Pending",
-      orderStatus: "Pending",
+      paymentStatus: "pending",
+      shippingStatus: "pending",
+      orderStatus: "pending",
       stripeSessionId: session.id,
     });
 
@@ -65,11 +67,9 @@ export const addOrderController = async (req, res) => {
     res.status(200).json({ orderId: newOrder._id, stripeSession: session });
   } catch (error) {
     console.error("Error creating order:", error);
-    res.status(500).json({ error: "Internal Server Error" }); // Generic error message for production
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
-
-
 
 export const getOrderController = async (req, res) => {
   try {
@@ -91,26 +91,30 @@ export const getOrderController = async (req, res) => {
 
 export const cancelOrderController = async (req, res) => {
   try {
-      const { orderId, userId } = req.body;
-      if (!orderId || !userId) {
-          return res.status(400).json({ error: "Invalid request data" });
-      }
-      const order = await Order.findById(orderId);
-      if (!order) {
-          return res.status(404).json({ error: "Order not found" });
-      }
-      if (order.user.toString() !== userId) {
-          return res.status(403).json({ error: "You are not authorized to cancel this order" });
-      }
-      if (order.orderStatus === 'delivered') {
-          return res.status(400).json({ error: "Order cannot be cancelled at this stage" });
-      }
-      order.orderStatus = 'cancelled';
-      order.paymentStatus = 'cancelled';
-      await order.save();
-      res.status(200).json({ message: "Order cancelled successfully" });
+    const { orderId, userId } = req.body;
+    if (!orderId || !userId) {
+      return res.status(400).json({ error: "Invalid request data" });
+    }
+    const order = await Order.findById(orderId);
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+    if (order.user.toString() !== userId) {
+      return res
+        .status(403)
+        .json({ error: "You are not authorized to cancel this order" });
+    }
+    if (order.orderStatus === "delivered") {
+      return res
+        .status(400)
+        .json({ error: "Order cannot be cancelled at this stage" });
+    }
+    order.orderStatus = "cancelled";
+    order.paymentStatus = "cancelled";
+    await order.save();
+    res.status(200).json({ message: "Order cancelled successfully" });
   } catch (err) {
-      console.log("Error in cancelling order ! ::" + err.message);
-      res.status(501).json({ error: "INTERNAL SERVER ERROR!" })
+    console.log("Error in cancelling order ! ::" + err.message);
+    res.status(501).json({ error: "INTERNAL SERVER ERROR!" });
   }
-}
+};

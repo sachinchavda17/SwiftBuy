@@ -23,8 +23,8 @@ const OrderSchema = new mongoose.Schema(
     },
     shippingStatus: {
       type: String,
-      enum: ["Pending", "Shipped", "Delivered"],
-      default: "Pending",
+      enum: ["pending", "shipped", "delivered"],
+      default: "pending",
     },
     orderStatus: {
       type: String,
@@ -34,6 +34,10 @@ const OrderSchema = new mongoose.Schema(
     orderDate: {
       type: Date,
       default: Date.now,
+    },
+    discount: {
+      type: Number,
+      default: 0,
     },
 
     deliveryDate: Date,
