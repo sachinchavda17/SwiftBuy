@@ -20,7 +20,7 @@ const Category = () => {
       } catch (error) {
         console.error("Failed to fetch category:", error);
       } finally {
-        setLoading(false);
+        setLoading(true);
       }
     };
 

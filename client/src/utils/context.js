@@ -35,7 +35,7 @@ const AppContext = ({ children }) => {
     setCartCount(count);
 
     let subTotal = 0;
-    console.log(cartItems);
+    // console.log(cartItems);
     // cartItems.map((item)=>subTotal += item.price * item.quantity)
     cartItems.forEach(
       (item) => (subTotal += item.product.price * item.quantity)

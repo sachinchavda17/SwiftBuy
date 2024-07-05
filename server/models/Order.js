@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const OrderSchema = new mongoose.Schema(
   {
-    userId: {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
@@ -14,12 +14,11 @@ const OrderSchema = new mongoose.Schema(
     paymentStatus: {
       type: String,
       required: true,
-      enum: ["Paid", "Pending", "Failed"],
-      default: "Pending",
+      enum: ["pending", "received", "cancelled"],
+      default: "pending",
     },
     shippingAddress: {
       type: Object,
-      ref: "Address",
       required: true,
     },
     shippingStatus: {
@@ -29,14 +28,14 @@ const OrderSchema = new mongoose.Schema(
     },
     orderStatus: {
       type: String,
-      enum: ["Pending", "Confirmed", "Cancelled", "Completed"],
-      default: "Pending",
+      enum: ["pending", "confirmed", "dispatched", "delivered", "cancelled"],
+      default: "pending",
     },
     orderDate: {
       type: Date,
       default: Date.now,
     },
-    
+
     deliveryDate: Date,
 
     totalAmount: {

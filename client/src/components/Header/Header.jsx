@@ -11,6 +11,7 @@ import Search from "./Search/Search";
 import ThemeToggle from "../toggleTheme/ThemeToggle";
 import { Context } from "../../utils/context";
 import "./Header.scss";
+import DropDown from "./DropDown";
 
 const Header = () => {
   const [scroll, setScroll] = useState(false);
@@ -101,12 +102,13 @@ const Header = () => {
           </div>
           <div className="right">
             <TbSearch onClick={() => setShowSearch(true)} />
-            {!isAdmin && <AiOutlineHeart />}
+           
             <span className="cart-icon" onClick={() => setShowCart(true)}>
               <CgShoppingCart />
               {!!cartCount && <span>{cartCount}</span>}
             </span>
-            <ThemeToggle />
+          
+            <DropDown />
           </div>
         </div>
       </header>

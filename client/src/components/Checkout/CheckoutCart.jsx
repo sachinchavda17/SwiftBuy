@@ -16,27 +16,31 @@ const CheckoutCart = ({ paymentMethod, shippingAddress }) => {
   } = useContext(Context);
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log(cartItems);
-
   const stripePromise = loadStripe(
     process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY
   );
 
   const handlePayment = async () => {
-    setIsLoading(true); // Set loading state to true when payment starts
+    setIsLoading(true);
+
     try {
+      if (!paymentMethod || !shippingAddress || !cartItems) {
+        return toast.error("Please fill all the fields!");
+      }
+      console.log(cartItems);
       const stripe = await stripePromise;
       const response = await axios.post(
         `${process.env.REACT_APP_DEV_URL}/api/orders/addorders`,
         {
           userId: user._id,
-          products: cartItems,
+          products: cartItems.product,
           paymentMethod,
           shippingAddress,
           totalAmount: cartSubTotal,
         }
       );
 
+      localStorage.setItem("orderData", JSON.stringify(response));
       const { id } = response.data.stripeSession;
       await stripe.redirectToCheckout({ sessionId: id });
     } catch (error) {
@@ -137,20 +141,37 @@ const CheckoutCart = ({ paymentMethod, shippingAddress }) => {
             <p>Total Items in Cart</p>
             <p>{cartItems.length} items</p>
           </div>
-          <p className="mt-0.5 text-sm text-text dark:text-gray-400">
+          {/* <p className="mt-0.5 text-sm text-text dark:text-gray-400">
             Shipping and taxes calculated at checkout.
-          </p>
+          </p> */}
           <div className="mt-6">
             {isLoading ? (
               <div className="flex items-center justify-center rounded-md border border-transparent bg-primary dark:bg-secondary px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
                 <Loading />
               </div>
             ) : (
-              <div
-                onClick={handlePayment}
-                className="flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-primary dark:bg-secondary px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-              >
-                Order Now
+              // <div
+              //   onClick={handlePayment}
+              //   className="flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-primary dark:bg-secondary px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+              // >
+              //   Order Now
+              // </div>
+              <div className="space-y-3">
+                {paymentMethod && paymentMethod === "card" ? (
+                  <button
+                    onClick={handlePayment}
+                    className="flex w-full items-center justify-center rounded-lg bg-green-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4  focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                  >
+                    Proceed to Card Payment
+                  </button>
+                ) : (
+                  <button
+                    onClick={handlePayment}
+                    className="flex w-full items-center justify-center rounded-lg bg-green-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4  focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                  >
+                    Place Order
+                  </button>
+                )}
               </div>
             )}
           </div>

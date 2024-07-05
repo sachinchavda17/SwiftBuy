@@ -11,6 +11,7 @@ import Search from "./Search/Search";
 import ThemeToggle from "../toggleTheme/ThemeToggle";
 import { Context } from "../../utils/context";
 import "./Header.scss";
+import DropDown from "./DropDown";
 
 const Header = () => {
   const [scroll, setScroll] = useState(false);
@@ -72,22 +73,22 @@ const Header = () => {
               >
                 Home
               </li>
-              <li
+              {/* <li
                 onClick={() => {
                   navigate("/admin/add-category");
                   showSidebar && setShowSidebar(false);
                 }}
               >
                 Add Category
-              </li>
-              <li
+              </li> */}
+              {/* <li
                 onClick={() => {
                   navigate("/admin/add-product");
                   showSidebar && setShowSidebar(false);
                 }}
               >
                 Add Product
-              </li>
+              </li> */}
               <li onClick={handleLogout}>Logout</li>
             </ul>
           </div>
@@ -96,12 +97,11 @@ const Header = () => {
           </div>
           <div className="right">
             <TbSearch onClick={() => setShowSearch(true)} />
-            {!isAdmin && <AiOutlineHeart />}
             <span className="cart-icon" onClick={() => setShowCart(true)}>
               <CgShoppingCart />
               {!!cartCount && <span>{cartCount}</span>}
             </span>
-            <ThemeToggle />
+            <DropDown/>
           </div>
         </div>
       </header>

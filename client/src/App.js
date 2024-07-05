@@ -18,6 +18,8 @@ import ScrollToTop from "./utils/ScrollToTop";
 import AdminHeader from "./components/Header/AdminHeader";
 import AddCategory from "./components/Admin/AddCategory";
 import AddProduct from "./components/Admin/AddProduct";
+import UserProfile from "./components/User/UserProfile";
+import Order from "./components/User/Order";
 
 const App = () => {
   const [cookies] = useCookies(["swiftbuyToken"]);
@@ -80,6 +82,8 @@ const UserRoute = () => {
         <Route path="/check" element={<Checkout />} />
         <Route path="/success" element={<PaymentConfirmation />} />
         <Route path="/cancel" element={<PaymentCancel />} />
+        <Route path="/my-profile" element={<UserProfile />} />
+        <Route path="/my-orders" element={<Order />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
       <Newsletter />

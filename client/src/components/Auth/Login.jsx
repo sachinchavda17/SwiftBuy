@@ -47,7 +47,7 @@ const Login = () => {
         setCookie("swiftbuyToken", token, { path: "/", expires: date });
         window.location.reload();
         navigate("/");
-      }, 2000);
+      }, 500);
     } catch (error) {
       console.error("Error in login", error.message);
       toast.error(error.response?.data?.error || "Login failed!");

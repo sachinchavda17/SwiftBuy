@@ -15,5 +15,6 @@ router.post("/signup", signupController);
 router.post("/login", loginController);
 router.post("/addaddress", addAddressController);
 router.get("/getaddress/:userId", getAddressController);
+router.post("/editaddress/:userId/:addressId", getAddressController);
 
 export default router;

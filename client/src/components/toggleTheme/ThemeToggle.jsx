@@ -14,8 +14,11 @@ const ThemeToggle = () => {
   };
 
   return (
-    <span onClick={toggleTheme}>
-      {theme === "light" ? <BsFillMoonStarsFill /> :<BsFillSunFill />}
+    <span onClick={toggleTheme} className="flex gap-x-5 px-4 py-2 text-sm cursor-pointer">
+      <span className="">
+        {theme === "light" ? <BsFillMoonStarsFill /> : <BsFillSunFill />}
+      </span>
+      <span>{theme.toUpperCase()}</span>
     </span>
   );
 };

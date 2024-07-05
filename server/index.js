@@ -7,6 +7,7 @@ import categoriesRoutes from "./routes/categories.js"
 import productsRoutes from "./routes/products.js"
 import ordersRoutes from "./routes/orders.js"
 import cartsRoutes from "./routes/cart.js"
+import userRoutes from "./routes/user.js"
 import bodyParser from "body-parser";
 import Product from "./models/Product.js";
 import {products} from "./data.js"
@@ -28,6 +29,7 @@ app.use("/api/categories",categoriesRoutes)
 app.use("/api/products",productsRoutes)
 app.use("/api/orders",ordersRoutes)
 app.use("/api/carts",cartsRoutes)
+app.use("/api/user",userRoutes)
 
 // await Product.insertMany(products)
 
