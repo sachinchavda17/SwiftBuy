@@ -26,6 +26,7 @@ const SingleProduct = () => {
     setQuantity,
     decrementQuantity,
     incrementQuantity,
+    cookies,
   } = useContext(Context);
 
   useEffect(() => {
@@ -81,9 +82,12 @@ const SingleProduct = () => {
               <button
                 className="add-to-cart-button"
                 onClick={() => {
-                  handleAddToCart(product, quantity);
-                  setQuantity(1);
-                  
+                  if (cookies?.swiftbuyToken) {
+                    handleAddToCart(product, quantity);
+                    setQuantity(1);
+                  } else {
+                    toast.error("Login to add item in cart.");
+                  }
                 }}
               >
                 <FaCartPlus size={20} /> ADD TO CART

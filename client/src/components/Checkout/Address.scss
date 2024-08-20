@@ -4,6 +4,9 @@
   background-color: var(--background-color);
   padding: 3rem 1.25rem;
   margin-top: 3rem;
+  border: 1px solid var(--border-color);
+  box-shadow: 3px 3px 10px var(--sixth-color);
+
 
   .address-content {
     .address-handle {

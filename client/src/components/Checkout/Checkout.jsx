@@ -13,6 +13,7 @@ const Checkout = () => {
   const [paymentMethod, setPaymentMethod] = useState();
   const [shippingAddress, setShippingAddress] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [showAddressPage, setShowAddressPage] = useState(false);
 
   useEffect(() => {
     const fetchAddresses = async () => {
@@ -41,11 +42,17 @@ const Checkout = () => {
 
   return (
     <>
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 bg-background dark:bg-secondary">
+      <div className="mx-auto max-w-7xl px-4 mb-10 sm:px-6 lg:px-8 bg-background dark:bg-secondary">
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
           <div className="lg:col-span-3">
-            <Address setAddress={setAddress} />
-            <div className="border-b border-border dark:border-ternary pb-12">
+            <div
+              className="text-white text-md px-5 py-2 mt-12 mb-6 bg-primary w-fit rounded-md  cursor-pointer "
+              onClick={() => setShowAddressPage(!showAddressPage)}
+              >
+              {!showAddressPage ? " + Add new Address " : "- Close Address Page"}
+            </div>
+              {showAddressPage && <Address setAddress={setAddress} />}
+            <div className="">
               <h2 className="text-base font-semibold leading-7 text-text dark:text-white">
                 Your Addresses
               </h2>

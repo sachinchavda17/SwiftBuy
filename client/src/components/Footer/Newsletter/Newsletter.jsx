@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import "./Newsletter.scss";
 import {
   FaTwitter,

@@ -36,15 +36,6 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [showSidebar]);
 
-  const handleLogout = () => {
-    Cookies.remove("swiftbuyToken");
-    localStorage.clear("swiftbuyUser");
-    setIsAdmin(false);
-    setIsLogin(false);
-    setUser(null);
-    navigate("/");
-  };
-
   const handleSidebarToggle = () => {
     setShowSidebar(!showSidebar);
   };
@@ -66,25 +57,10 @@ const Header = () => {
               >
                 Home
               </li>
-              {!user ? (
-                <li
-                  onClick={() => {
-                    navigate("/login");
-                    showSidebar && setShowSidebar(false);
-                  }}
-                >
-                  Login
-                </li>
-              ) : (
-                <li
-                  onClick={() => {
-                    handleLogout();
-                    showSidebar && setShowSidebar(false);
-                  }}
-                >
-                  Logout
-                </li>
+              {user && (
+                <li onClick={() => navigate("/my-orders")}>My Orders</li>
               )}
+
               {isAdmin && (
                 <li
                   onClick={() => {
@@ -102,12 +78,12 @@ const Header = () => {
           </div>
           <div className="right">
             <TbSearch onClick={() => setShowSearch(true)} />
-           
+
             <span className="cart-icon" onClick={() => setShowCart(true)}>
               <CgShoppingCart />
               {!!cartCount && <span>{cartCount}</span>}
             </span>
-          
+
             <DropDown />
           </div>
         </div>

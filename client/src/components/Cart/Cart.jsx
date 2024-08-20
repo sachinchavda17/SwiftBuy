@@ -7,9 +7,10 @@ import CartItem from "./CartItem/CartItem";
 import toast from "react-hot-toast";
 import { BsCartX } from "react-icons/bs";
 import { MdClose } from "react-icons/md";
+
 const Cart = ({ setShowCart }) => {
   const navigate = useNavigate();
-  const { cartSubTotal, setCartSubTotal, cartItems, setCartItems, user } =
+  const { cartSubTotal, setCartSubTotal, cartItems, setCartItems, user ,cookies} =
     useContext(Context);
 
   useEffect(() => {
@@ -20,12 +21,16 @@ const Cart = ({ setShowCart }) => {
   }, []);
 
   useEffect(() => {
-    getCart();
+    if(cookies.swiftbuyToken){
+      getCart();
+    }else{
+      toast.error("Login to Check Cart items.");
+    }
   }, []);
 
   const getCart = async () => {
     try {
-      const cart = await fetchDataFromApi(`/api/carts/get-cart/${user._id}`);
+      const cart = await fetchDataFromApi(`/api/carts/get-cart/${user?._id}`);
       if (cart && cart?.response?.data?.empty) {
         throw new Error(cart?.response?.data?.empty);
       }

@@ -45,7 +45,7 @@ const AppContext = ({ children }) => {
 
   const handleAddToCart = async (product, quantity) => {
     try {
-      const response = await fetchDataPost(`/api/carts/add-cart/${user._id}`, {
+      const response = await fetchDataPost(`/api/carts/add-cart/${user?._id}`, {
         pId: product._id,
         quantity,
       });
@@ -144,6 +144,7 @@ const AppContext = ({ children }) => {
         descrementQuantity,
         quantity,
         setQuantity,
+        cookies,
       }}
     >
       {children}
