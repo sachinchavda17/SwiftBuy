@@ -17,5 +17,4 @@ router.delete("/removeproduct/:pid",  removeProductController);
 router.get("/getallproducts", getAllProductController);
 router.get("/getproduct/:id",  getProductController);
 router.get("/search/:query", getSearchProductController);
-
 export default router;

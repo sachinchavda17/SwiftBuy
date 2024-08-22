@@ -27,6 +27,16 @@ export const fetchDataPost = async (url, ndata) => {
     }
   };
 
+  // New Function to Delete Data (for User/Customer/Product Management)
+export const fetchDataDelete = async (url) => {
+  try {
+    const { data } = await axios.delete(process.env.REACT_APP_DEV_URL + url, params);
+    return data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
 
 export const makePaymentRequest = axios.create({
     baseURL:process.env.REACT_APP_DEV_URL,

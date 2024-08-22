@@ -1,15 +1,91 @@
+// @import "../../../css-config/mixins.scss";
+
+// .product-card {
+//   width: calc(50% - 5px);
+//   margin-bottom: 20px;
+//   box-shadow: 0 0 10px  var(--forth-color);
+//   padding: 5px ;
+//   border-radius: 5px ;
+//   @include md {
+//     width: calc(25% - 15px);
+//   }
+//   .thumnail {
+//     width: 100%;
+//     height: 180px;
+//     background-color: var(--ternary-color);
+//     margin-bottom: 10px;
+//     padding: 25px;
+//     display: flex;
+//     align-items: center;
+//     @include md {
+//       height: 350px;
+//     }
+//     img {
+//       transition: all ease 0.3s;
+//       display: block;
+//       width: 100%;
+//     }
+//   }
+//   .rating{
+//     position: absolute;
+//     top: 5;
+//     right: 10;
+//   }
+//   .prod-details {
+//     color: var(--text-color);
+//     .name {
+//       font-size: 14px;
+//       display: block;
+//       text-overflow: ellipsis;
+//       white-space: nowrap;
+//       overflow: hidden;
+//       @include md {
+//         font-size: 16px;
+//         margin-bottom: 10px;
+//       }
+//     }
+//     .price {
+//       font-size: 18px;
+//       @include md {
+//         font-size: 24px;
+//       }
+
+//     }
+//   }
+//   .edit-cta {
+//     margin-top: 5px ;
+//     background: var(--primary-color);
+//     padding: 7px 10px;
+//     border-radius: 5px;
+//     color: white;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     gap: 10px;
+//     cursor: pointer;
+//   }
+//   &:hover {
+//     .thumnail {
+//       img {
+//         transform: scale(1.2);
+//       }
+//     }
+//   }
+// }
+
 @import "../../../css-config/mixins.scss";
 
-
 .product-card {
+  position: relative; /* Needed for absolute positioning of rating */
   width: calc(50% - 5px);
   margin-bottom: 20px;
-  box-shadow: 0 0 10px  var(--forth-color);
-  padding: 5px ;
-  border-radius: 5px ;
+  box-shadow: 0 0 10px var(--forth-color);
+  padding: 5px;
+  border-radius: 5px;
   @include md {
     width: calc(25% - 15px);
   }
+
   .thumnail {
     width: 100%;
     height: 180px;
@@ -27,6 +103,28 @@
       width: 100%;
     }
   }
+
+  .rating {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    display: flex;
+    gap: 2px;
+    .filled-star,
+    .half-star {
+      color: var(--primary-color);
+    }
+    .empty-star {
+      color: lightgray;
+    }
+  }
+  .fav {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    color: var(--primary-color);
+  }
+
   .prod-details {
     color: var(--text-color);
     .name {
@@ -41,14 +139,24 @@
       }
     }
     .price {
-      font-size: 18px;
+      text-decoration: line-through;
+      font-size: 12px;
       @include md {
-        font-size: 24px;
+        font-size: 18px;
       }
     }
+    .discount-price {
+      font-size: 18px;
+      @include md {
+        font-size: 22px;
+      }
+      padding-left: 5px;
+      color: var(--primary-color);
+    }
   }
+
   .edit-cta {
-    margin-top: 5px ;
+    margin-top: 5px;
     background: var(--primary-color);
     padding: 7px 10px;
     border-radius: 5px;
@@ -59,6 +167,7 @@
     gap: 10px;
     cursor: pointer;
   }
+
   &:hover {
     .thumnail {
       img {

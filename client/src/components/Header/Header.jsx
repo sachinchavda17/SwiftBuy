@@ -57,19 +57,46 @@ const Header = () => {
               >
                 Home
               </li>
-              {user && (
+
+              {user &&  !isAdmin && (
                 <li onClick={() => navigate("/my-orders")}>My Orders</li>
               )}
 
               {isAdmin && (
-                <li
-                  onClick={() => {
-                    navigate("/admin");
-                    showSidebar && setShowSidebar(false);
-                  }}
-                >
-                  Admin
-                </li>
+                <>
+                  <li
+                    onClick={() => {
+                      navigate("/admin/edit");
+                      showSidebar && setShowSidebar(false);
+                    }}
+                  >
+                    Edit
+                  </li>
+                  <li
+                    onClick={() => {
+                      navigate("/admin/product-list");
+                    }}
+                  >
+                    Products
+                  </li>
+                  <li
+                    onClick={() => {
+                      navigate("/admin/order-manage");
+                      showSidebar && setShowSidebar(false);
+                    }}
+                  >
+                    Orders
+                  </li>
+                 
+                  <li
+                    onClick={() => {
+                      navigate("/admin/user-manage");
+                      showSidebar && setShowSidebar(false);
+                    }}
+                  >
+                    Users
+                  </li>
+                </>
               )}
             </ul>
           </div>

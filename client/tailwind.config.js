@@ -12,7 +12,8 @@ module.exports = {
         ternary: "var(--ternary-color)",
         seventh: "var(--seventh-color)",
         border: "var(--border-color)",
-        error:"var(--error-color)"
+        error:"var(--error-color)",
+        darkGray:"var(--darkGray-color)",
       },
     },
   },

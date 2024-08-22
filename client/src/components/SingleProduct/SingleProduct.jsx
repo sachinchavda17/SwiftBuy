@@ -15,6 +15,7 @@ import { Context } from "../../utils/context";
 import toast from "react-hot-toast";
 import SingleProductSkeleton from "../skeletons/SingleProductSkeleton";
 import ProductSkeleton from "../skeletons/ProductSkeleton";
+import Rating from "../common/Rating";
 
 const SingleProduct = () => {
   const { id } = useParams();
@@ -71,7 +72,12 @@ const SingleProduct = () => {
           </div>
           <div className="right">
             <span className="name">{product.title}</span>
-            <span className="price">&#8377; {product.price}</span>
+            <div className="price-sec">
+              <span className="price">&#8377; {product?.price}</span>
+              <span className="discount-price">
+                &#8377; {(product?.discountPercentage * product?.price) / 100}
+              </span>
+            </div>
             <span className="desc">{product.desc}</span>
             <div className="cart-buttons">
               <div className="quantity-buttons">
@@ -100,7 +106,7 @@ const SingleProduct = () => {
               <div className="text-bolds">
                 Category : <span>{product.category.title}</span>
               </div>
-              <div className="text-bolds">
+              {/* <div className="text-bolds">
                 Share :
                 <span className="social-icons">
                   <FaFacebookF size={16} />
@@ -109,7 +115,15 @@ const SingleProduct = () => {
                   <FaLinkedinIn size={16} />
                   <FaPinterest size={16} />
                 </span>
+              </div> */}
+              <div className="flex gap-3 text-bold">
+                Rating :
+                <Rating rating={product.rating} className={"flex gap-2"} />
               </div>
+            </div>
+            <div className="stock">
+              Stock : {product.stock > 0 ? "In Stock " : "Out of Stock"}
+              {/* {product.stock} */}
             </div>
           </div>
         </div>

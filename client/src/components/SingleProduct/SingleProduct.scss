@@ -47,10 +47,18 @@
             line-height: 32px;
           }
         }
-        .price {
-          font-size: 24px;
-          line-height: 32px;
-          margin-bottom: 20px;
+        .price-sec {
+          display: flex;
+          gap: 10px;
+          align-items: center;
+          margin-bottom: 15px;
+          .price {
+            text-decoration: line-through;
+          }
+          .discount-price {
+            font-size: 24px;
+            color: var(--primary-color);
+          }
         }
         .desc {
           font-size: 14px;

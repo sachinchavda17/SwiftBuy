@@ -196,3 +196,13 @@ export const getSearchProductController = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error!" });
   }
 };
+
+export const fetchAllProducts = async (req, res) => {
+  try {
+    const products = await Product.find();
+    res.status(200).json({ products });
+  } catch (error) {
+    console.error("Error in Fetch All Products:", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};

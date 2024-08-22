@@ -136,6 +136,10 @@ import AddCategory from "./components/Admin/AddCategory";
 import AddProduct from "./components/Admin/AddProduct";
 import UserProfile from "./components/User/UserProfile";
 import Order from "./components/User/Order";
+import ProductList from "./components/Admin/ProductList";
+import OrderManagement from "./components/Admin/OrderManagement";
+import CustomerManagement from "./components/Admin/CustomerManagement";
+import UserManagement from "./components/Admin/UserManagement";
 
 const App = () => {
   const [cookies] = useCookies(["swiftbuyToken"]);
@@ -207,13 +211,17 @@ const LoggedInUserRoute = () => {
 const AdminRoute = () => {
   return (
     <>
-      <AdminHeader />
+      <Header />
       <Routes>
-        <Route path="/" element={<AdminHome />} />
+        <Route path="/edit" element={<AdminHome />} />
         <Route path="/add-category" element={<AddCategory />} />
         <Route path="/add-category/:id" element={<AddCategory />} />
         <Route path="/add-product" element={<AddProduct />} />
         <Route path="/update-product/:id" element={<AddProduct />} />
+        <Route path="/product-list" element={<ProductList />} />
+        <Route path="/order-manage" element={<OrderManagement />} />
+        <Route path="/custo-manage" element={<CustomerManagement />} />
+        <Route path="/user-manage" element={<UserManagement />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
       <Footer />

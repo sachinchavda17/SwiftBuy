@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { Context } from "../../utils/context";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
-import { Link,  useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Loading from "../skeletons/Loading";
 
@@ -15,64 +15,62 @@ const CheckoutCart = ({ paymentMethod, shippingAddress }) => {
     handleRemoveFromCart,
   } = useContext(Context);
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const stripePromise = loadStripe(
     process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY
   );
 
-
-  const handleCashPayment = async()=>{
+  const handleCashPayment = async () => {
     try {
-      toast.success("Order Placed")
-      navigate("/")
+      toast.success("Order Placed");
+      navigate("/");
       // create new api for cash handling payment
     } catch (error) {
       toast.error(error.message);
     } finally {
       setIsLoading(false); // Set loading state to false when payment ends
     }
-  }
+  };
 
   const handlePayment = async () => {
     setIsLoading(true);
-      try {
-        if (!paymentMethod || !shippingAddress || !cartItems) {
-          return toast.error("Please fill all the fields!");
-        }
-
-        const requestData = {
-          userId: user._id,
-          products: cartItems,
-          paymentMethod,
-          shippingAddress,
-          totalAmount: cartSubTotal,
-        };
-
-        console.log("Request Data:", requestData);
-
-        const stripe = await stripePromise;
-        const response = await axios.post(
-          `${process.env.REACT_APP_DEV_URL}/api/orders/addorders`,
-          requestData
-        );
-
-        localStorage.setItem("orderData", JSON.stringify(response));
-        const { id } = response.data.stripeSession;
-        await stripe.redirectToCheckout({ sessionId: id });
-      } catch (error) {
-        toast.error(error.message);
-      } finally {
-        setIsLoading(false); // Set loading state to false when payment ends
+    try {
+      if (!paymentMethod || !shippingAddress || !cartItems) {
+        return toast.error("Please fill all the fields!");
       }
-    
+
+      const requestData = {
+        userId: user._id,
+        products: cartItems,
+        paymentMethod,
+        shippingAddress,
+        totalAmount: cartSubTotal,
+      };
+
+      console.log("Request Data:", requestData);
+
+      const stripe = await stripePromise;
+      const response = await axios.post(
+        `${process.env.REACT_APP_DEV_URL}/api/orders/addorders`,
+        requestData
+      );
+
+      localStorage.setItem("orderData", JSON.stringify(response));
+      const { id } = response.data.stripeSession;
+      await stripe.redirectToCheckout({ sessionId: id });
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setIsLoading(false); // Set loading state to false when payment ends
+    }
   };
 
   return (
-    <div className="lg:col-span-2">
-      <div className="mx-auto mt-12 bg-background dark:bg-secondary px-2 sm:px-2 lg:px-4">
+    <div className="lg:col-span-2  shadow-lg shadow-border rounded py-3">
+      <div className="mx-auto mt-6 bg-background dark:bg-secondary px-2 sm:px-2 lg:px-4  p-5 ">
         <div className="">
-          <h1 className="text-4xl my-5 font-bold tracking-tight text-text dark:text-white">
-            Cart
+          <h1 className="text-4xl mt-3 font-bold tracking-tight text-primary text-center  ">
+            <span className="border-b-2 px-3 border-primary  ">Cart</span>
           </h1>
           <div className="flow-root">
             <ul

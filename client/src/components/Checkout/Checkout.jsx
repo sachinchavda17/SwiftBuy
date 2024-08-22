@@ -42,11 +42,11 @@ const Checkout = () => {
 
   return (
     <>
-      <div className="mx-auto max-w-7xl px-4 mb-10 sm:px-6 lg:px-8 bg-background dark:bg-secondary">
-        <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
-          <div className="lg:col-span-3">
+      <div className="mx-auto max-w-7xl py-3 px-4 mb-10 sm:px-6 lg:px-8 gap-3 bg-background dark:bg-secondary ">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5 ">
+          <div className="lg:col-span-3 shadow-lg shadow-border rounded p-5">
             <div
-              className="text-white text-md px-5 py-2 mt-12 mb-6 bg-primary w-fit rounded-md  cursor-pointer "
+              className="text-white text-md px-5 py-2 mt-12 mb-6 bg-primary w-fit rounded-md  cursor-pointer  "
               onClick={() => setShowAddressPage(!showAddressPage)}
               >
               {!showAddressPage ? " + Add new Address " : "- Close Address Page"}

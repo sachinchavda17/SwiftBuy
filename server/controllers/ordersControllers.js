@@ -118,3 +118,35 @@ export const cancelOrderController = async (req, res) => {
     res.status(501).json({ error: "INTERNAL SERVER ERROR!" });
   }
 };
+
+export const updateOrder = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedOrder = await Order.findByIdAndUpdate(id, req.body, { new: true });
+    res.status(200).json({ message: "Order updated", order: updatedOrder });
+  } catch (error) {
+    console.error("Error in Update Order:", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const fetchOrderByUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const orders = await Order.find({ userId });
+    res.status(200).json({ orders });
+  } catch (error) {
+    console.error("Error in Fetch Orders by User:", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const getAllOrders = async (req, res) => {
+  try {
+    const orders = await Order.find().populate("user");
+    res.status(200).json({ orders });
+  } catch (error) {
+    console.error("Error in Fetch All Orders:", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};  
