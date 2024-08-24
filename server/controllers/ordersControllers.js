@@ -122,7 +122,9 @@ export const cancelOrderController = async (req, res) => {
 export const updateOrder = async (req, res) => {
   try {
     const { id } = req.params;
-    const updatedOrder = await Order.findByIdAndUpdate(id, req.body, { new: true });
+    const updatedOrder = await Order.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
     res.status(200).json({ message: "Order updated", order: updatedOrder });
   } catch (error) {
     console.error("Error in Update Order:", error.message);
@@ -143,10 +145,29 @@ export const fetchOrderByUser = async (req, res) => {
 
 export const getAllOrders = async (req, res) => {
   try {
-    const orders = await Order.find().populate("user");
+    const orders = await Order.find().populate("user").populate("products");
     res.status(200).json({ orders });
   } catch (error) {
     console.error("Error in Fetch All Orders:", error.message);
     res.status(500).json({ error: "Internal Server Error" });
   }
-};  
+};
+export const getOrder = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid order ID format" });
+    }
+
+    const order = await Order.findById(id).populate("products");
+      
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+    res.status(200).json({ order });
+  } catch (error) {
+    console.error("Error in Fetch Order:", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};

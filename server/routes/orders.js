@@ -19,6 +19,7 @@ import {
   getOrderController,
   getAllOrders,
   updateOrder,
+  getOrder,
 } from "../controllers/ordersControllers.js";
 import express from "express";
 
@@ -28,6 +29,7 @@ router.post("/addorders", addOrderController);
 router.get("/fetch-user-order/:userId", getOrderController);
 router.delete("/cancel-order", cancelOrderController);
 router.get("/all-orders", getAllOrders); // Admin only
+router.get("/get/:id", getOrder); // Admin only
 router.put("/update-order/:id", updateOrder);
 
 

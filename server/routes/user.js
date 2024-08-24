@@ -1,11 +1,17 @@
 import express from "express";
-import { fetchUserById, updateUser, deleteUser, fetchAllUsers } from "../controllers/userController.js";
+import {
+  fetchUserById,
+  fetchAllUsers,
+  updateUserController,
+  deleteUserController,
+} from "../controllers/userController.js";
 
 const router = express.Router();
 
-router.post("/update-user/:id", updateUser);
 router.get("/:id", fetchUserById);
-router.delete("/:id", deleteUser);
-router.get("/", fetchAllUsers);  // Fetch all users (admin only)
+router.put("/update/:id", updateUserController);
+router.delete("/delete/:id", deleteUserController);
+router.get("/", fetchAllUsers); 
 
 export default router;
+

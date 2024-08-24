@@ -19,7 +19,7 @@ const Header = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
   const { cartCount } = useContext(Context);
-  const { user, isAdmin, setUser, setIsAdmin, setIsLogin } =
+  const { user, isAdmin, setUser, setIsAdmin, setIsLogin, cookies } =
     useContext(Context);
   const navigate = useNavigate();
 
@@ -58,11 +58,18 @@ const Header = () => {
                 Home
               </li>
 
-              {user &&  !isAdmin && (
-                <li onClick={() => navigate("/my-orders")}>My Orders</li>
+              {user && !isAdmin && (
+                <li
+                  onClick={() => {
+                    navigate("/my-orders");
+                    showSidebar && setShowSidebar(false);
+                  }}
+                >
+                  My Orders
+                </li>
               )}
 
-              {isAdmin && (
+              {isAdmin  && (
                 <>
                   <li
                     onClick={() => {
@@ -75,6 +82,7 @@ const Header = () => {
                   <li
                     onClick={() => {
                       navigate("/admin/product-list");
+                      showSidebar && setShowSidebar(false);
                     }}
                   >
                     Products
@@ -87,7 +95,7 @@ const Header = () => {
                   >
                     Orders
                   </li>
-                 
+
                   <li
                     onClick={() => {
                       navigate("/admin/user-manage");

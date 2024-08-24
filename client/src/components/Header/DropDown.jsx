@@ -11,7 +11,7 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
 export default function DropDown() {
-  const { user, setUser, setIsAdmin, setIsLogin, isAdmin } =
+  const { user, setUser, setIsAdmin, setIsLogin, isAdmin, cookies } =
     useContext(Context);
   const navigate = useNavigate();
   const handleLogout = () => {

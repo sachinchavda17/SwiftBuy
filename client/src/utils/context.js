@@ -20,11 +20,11 @@ const AppContext = ({ children }) => {
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("swiftbuyUser"));
-    if (cookies?.swiftbuyToken) {
+    if (cookies?.swiftbuyToken && storedUser) {
       setIsLogin(true);
       setUser(storedUser);
     }
-    if (storedUser?.role === "admin") {
+    if (storedUser?.role === "admin" && cookies?.swiftbuyToken) {
       setIsAdmin(true);
     }
   }, []);
