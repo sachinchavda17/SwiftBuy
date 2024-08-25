@@ -9,7 +9,7 @@
   display: flex;
   justify-content: flex-end;
   z-index: 99;
-  
+
   .opac-layer {
     background-color: rgba(0, 0, 0, 0.5);
     position: absolute;
@@ -19,7 +19,7 @@
     height: 100%;
   }
   .cart-content {
-    overflow-y: auto;
+    // overflow-y: auto;
     width: 100%;
     background: var(--background-color);
     color: var(--text-color);
@@ -33,11 +33,14 @@
       width: 340px;
     }
     .cart-header {
+      position: sticky; /* Use sticky instead of fixed */
+      top: 0;
       display: flex;
       align-items: center;
       justify-content: flex-end;
       padding: 20px 15px;
       border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      background: var(--background-color);
       .heading {
         flex-grow: 1;
         margin-bottom: 0;
@@ -95,6 +98,9 @@
     }
     .cart-footer {
       border-top: 1px solid rgba(0, 0, 0, 0.1);
+      position: sticky; /* Keep the footer fixed at the bottom */
+      bottom: 0;
+      background: var(--background-color);
       .subtotal {
         padding: 20px 15px;
         border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -134,6 +140,12 @@
       }
     }
   }
+}
+
+.cart-items-container {
+  flex-grow: 1; /* Ensure this takes up the remaining space */
+  overflow-y: auto; /* Only this part is scrollable */
+  padding: 15px; /* Optional padding */
 }
 
 @keyframes slideCartWindow {

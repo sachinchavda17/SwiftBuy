@@ -6,6 +6,7 @@ import { Context } from "../../../utils/context";
 const CartItem = () => {
   const { handleRemoveFromCart, cartItems, handleCartProductQuantity } =
     useContext(Context);
+    console.log(cartItems);
 
   return (
     <div className="cart-products">
@@ -34,7 +35,11 @@ const CartItem = () => {
               <span>{item?.quantity}</span>
               <span>x</span>
               <span className="highlight">
-                &#8377;{item?.product?.price * item?.quantity}
+                &#8377;
+                {/* {((item?.product?.price * item?.product?.discountPercentage) /
+                  100) *
+                  item?.quantity} */}
+                  {item?.discountedPrice}
               </span>
             </div>
           </div>

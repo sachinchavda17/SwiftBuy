@@ -50,7 +50,6 @@ const AdminHome = () => {
   }, []);
   return (
     <div>
-      <Banner />
       <div className="main-content">
         <div className="layout">
           {loadingCategories ? (

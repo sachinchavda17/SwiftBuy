@@ -21,6 +21,12 @@ const UserModal = ({ isOpen, onClose, user, onUpdate }) => {
       });
     }
   }, [user]);
+  useEffect(() => {
+    document.body.style.overflowY = "hidden";
+    return () => {
+      document.body.style.overflowY = "scroll";
+    };
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

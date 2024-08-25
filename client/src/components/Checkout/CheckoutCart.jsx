@@ -21,21 +21,86 @@ const CheckoutCart = ({ paymentMethod, shippingAddress }) => {
   );
 
   const handleCashPayment = async () => {
+    setIsLoading(true);
     try {
-      toast.success("Order Placed");
-      navigate("/");
-      // create new api for cash handling payment
+      if (
+        !paymentMethod ||
+        !shippingAddress ||
+        !cartItems ||
+        cartItems.length === 0
+      ) {
+        return toast.error("Please fill all the fields!");
+      }
+
+      const requestData = {
+        userId: user._id,
+        products: cartItems,
+        paymentMethod,
+        shippingAddress,
+        totalAmount: cartSubTotal,
+      };
+
+      console.log("Request Data:", requestData);
+
+      const response = await axios.post(
+        `${process.env.REACT_APP_DEV_URL}/api/orders/addorders`,
+        requestData
+      );
+
+      if (response.status === 200) {
+        toast.success("Order Placed Successfully");
+        navigate("/"); // Redirect to homepage or order success page
+      } else {
+        toast.error("Failed to place the order.");
+      }
     } catch (error) {
       toast.error(error.message);
     } finally {
-      setIsLoading(false); // Set loading state to false when payment ends
+      setIsLoading(false);
     }
   };
 
+  // const handlePayment = async () => {
+  //   setIsLoading(true);
+  //   try {
+  //     if (!paymentMethod || !shippingAddress || !cartItems) {
+  //       return toast.error("Please fill all the fields!");
+  //     }
+
+  //     const requestData = {
+  //       userId: user._id,
+  //       products: cartItems,
+  //       paymentMethod,
+  //       shippingAddress,
+  //       totalAmount: cartSubTotal,
+  //     };
+
+  //     console.log("Request Data:", requestData);
+
+  //     const stripe = await stripePromise;
+  //     const response = await axios.post(
+  //       `${process.env.REACT_APP_DEV_URL}/api/orders/addorders`,
+  //       requestData
+  //     );
+
+  //     localStorage.setItem("orderData", JSON.stringify(response));
+  //     const { id } = response.data.stripeSession;
+  //     await stripe.redirectToCheckout({ sessionId: id });
+  //   } catch (error) {
+  //     toast.error(error.message);
+  //   } finally {
+  //     setIsLoading(false); // Set loading state to false when payment ends
+  //   }
+  // };
   const handlePayment = async () => {
     setIsLoading(true);
     try {
-      if (!paymentMethod || !shippingAddress || !cartItems) {
+      if (
+        !paymentMethod ||
+        !shippingAddress ||
+        !cartItems ||
+        cartItems.length === 0
+      ) {
         return toast.error("Please fill all the fields!");
       }
 
@@ -55,13 +120,18 @@ const CheckoutCart = ({ paymentMethod, shippingAddress }) => {
         requestData
       );
 
-      localStorage.setItem("orderData", JSON.stringify(response));
-      const { id } = response.data.stripeSession;
-      await stripe.redirectToCheckout({ sessionId: id });
+      const { stripeSession } = response.data;
+
+      if (stripeSession) {
+        // Redirect to Stripe checkout page
+        await stripe.redirectToCheckout({ sessionId: stripeSession.id });
+      } else {
+        toast.error("Failed to create Stripe session.");
+      }
     } catch (error) {
       toast.error(error.message);
     } finally {
-      setIsLoading(false); // Set loading state to false when payment ends
+      setIsLoading(false);
     }
   };
 
@@ -91,7 +161,7 @@ const CheckoutCart = ({ paymentMethod, shippingAddress }) => {
                     <div>
                       <div className="flex justify-between text-base font-medium text-text dark:text-white">
                         <h3>{item?.product?.title}</h3>
-                        <p className="ml-4">₹{item?.product?.price}</p>
+                        <p className="ml-4">₹{item?.discountedPrice}</p>
                       </div>
                       <p className="mt-1 text-sm text-text dark:text-gray-400">
                         {item.category}

@@ -138,7 +138,6 @@ import UserProfile from "./components/User/UserProfile";
 import Order from "./components/User/Order";
 import ProductList from "./components/Admin/ProductList";
 import OrderManagement from "./components/Admin/OrderManagement";
-import CustomerManagement from "./components/Admin/CustomerManagement";
 import UserManagement from "./components/Admin/UserManagement";
 
 const App = () => {
@@ -220,11 +219,9 @@ const AdminRoute = () => {
         <Route path="/update-product/:id" element={<AddProduct />} />
         <Route path="/product-list" element={<ProductList />} />
         <Route path="/order-manage" element={<OrderManagement />} />
-        <Route path="/custo-manage" element={<CustomerManagement />} />
         <Route path="/user-manage" element={<UserManagement />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
-      <Footer />
     </>
   );
 };

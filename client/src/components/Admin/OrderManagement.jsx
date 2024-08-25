@@ -20,7 +20,7 @@ const OrderManagement = () => {
       try {
         const data = await fetchDataFromApi("/api/orders/all-orders");
         setOrders(data.orders || []);
-       console.log(data.orders);
+        console.log(data.orders);
       } catch (error) {
         console.error("Error fetching orders:", error);
         toast.error("Failed to fetch orders.");
@@ -53,16 +53,15 @@ const OrderManagement = () => {
 
   const handleSaveClick = async () => {
     try {
-      const response = await axios.patch(
-        `${process.env.REACT_APP_DEV_URL}/api/orders/updateorderstatus/${editingOrderId}`,
+      const response = await axios.put(
+        `${process.env.REACT_APP_DEV_URL}/api/orders/update-order/${editingOrderId}`,
         {
           paymentStatus: editedOrder.paymentStatus,
           shippingStatus: editedOrder.shippingStatus,
         }
       );
-
-      if (response.data.success) {
-        toast.success("Order updated successfully!");
+      if (response.data.message) {
+        toast.success(response.data.message || "Order updated successfully!");
         setOrders(
           orders.map((order) =>
             order._id === editingOrderId ? editedOrder : order

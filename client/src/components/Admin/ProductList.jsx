@@ -3,6 +3,8 @@ import { fetchDataFromApi } from "../../utils/api";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { FaRegEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 const ProductList = () => {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
@@ -71,21 +73,21 @@ const ProductList = () => {
                   ₹{(product.discountPercentage * product.price) / 100}
                 </td>
                 <td className="py-3 px-6">{product.stock}</td>
-                <td className="py-3 px-6">
+                <td className="py-3 px-6 flex items-center gap-2">
                   <button
-                    className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition duration-300"
+                    className="text-blue-500 py-2 rounded-lg hover:text-blue-600 transition duration-300"
                     onClick={() =>
                       navigate(`/admin/update-product/${product._id}`)
                     }
                   >
-                    Edit
+                    <FaRegEdit fontSize={20} />
                   </button>
                   <button
-                    className="bg-red-500 text-white px-4 py-2 ml-2 rounded-lg shadow hover:bg-red-600 transition duration-300"
+                    className="text-red-500 py-2 rounded-lg hover:text-red-600 transition duration-300"
                     onClick={() => handleDelete(product._id)}
                     disabled={loading}
                   >
-                    Delete
+                    <MdDelete fontSize={20} />
                   </button>
                 </td>
               </tr>

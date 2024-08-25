@@ -7,8 +7,7 @@ const Banner = () => {
         <div className="text-content">
           <h1>SALES</h1>
           <p>
-            Convallis interdum puras adipiscing dis parturient posuere ac a quam
-            a eleifend montes parturient posuere curae tempor
+          Discover the latest in electronic gadgets! Stay ahead with the newest trends in earbuds, headphones, smartwatches, and speakers. Find your perfect tech match today.
           </p>
           <div className="ctas">
             <div className="banner-cta">Read More</div>

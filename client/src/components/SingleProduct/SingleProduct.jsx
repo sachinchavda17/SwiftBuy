@@ -89,7 +89,14 @@ const SingleProduct = () => {
                 className="add-to-cart-button"
                 onClick={() => {
                   if (cookies?.swiftbuyToken) {
-                    handleAddToCart(product, quantity);
+                    handleAddToCart(
+                      product,
+                      quantity,
+                      (
+                        (product?.discountPercentage * product?.price) /
+                        100
+                      ).toFixed(2)
+                    );
                     setQuantity(1);
                   } else {
                     toast.error("Login to add item in cart.");
@@ -120,10 +127,9 @@ const SingleProduct = () => {
                 Rating :
                 <Rating rating={product.rating} className={"flex gap-2"} />
               </div>
-            </div>
-            <div className="stock">
-              Stock : {product.stock > 0 ? "In Stock " : "Out of Stock"}
-              {/* {product.stock} */}
+              <div className="stock">
+                Stock : {product.stock > 0 ? "In Stock " : "Out of Stock"}
+              </div>
             </div>
           </div>
         </div>

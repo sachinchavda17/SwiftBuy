@@ -10,7 +10,7 @@ import AddressSkeleton from "../skeletons/AddressSkeleton";
 const Checkout = () => {
   const { user, cartItems } = useContext(Context);
   const [address, setAddress] = useState([]);
-  const [paymentMethod, setPaymentMethod] = useState();
+  const [paymentMethod, setPaymentMethod] = useState("cash");
   const [shippingAddress, setShippingAddress] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showAddressPage, setShowAddressPage] = useState(false);

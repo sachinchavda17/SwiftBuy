@@ -35,24 +35,22 @@ const AppContext = ({ children }) => {
     setCartCount(count);
 
     let subTotal = 0;
-    // console.log(cartItems);
-    // cartItems.map((item)=>subTotal += item.price * item.quantity)
-    cartItems.forEach(
-      (item) => (subTotal += item.product.price * item.quantity)
-    );
-    setCartSubTotal(subTotal);
+    cartItems.forEach((item) => (subTotal += item?.discountedPrice));
+    
+    setCartSubTotal(subTotal.toFixed(2));
   }, [cartItems]);
 
-  const handleAddToCart = async (product, quantity) => {
+  const handleAddToCart = async (product, quantity, discountedPrice) => {
     try {
       const response = await fetchDataPost(`/api/carts/add-cart/${user?._id}`, {
         pId: product._id,
         quantity,
+        discountedPrice,
       });
 
       if (response && response.cart) {
         let items = [...cartItems];
-        let index = items.findIndex((p) => p.product._id === product.product._id);
+        let index = items.findIndex((p) => p.product._id === product._id);
         if (index !== -1) {
           items[index].quantity += quantity;
         } else {
@@ -75,9 +73,8 @@ const AppContext = ({ children }) => {
         `${process.env.REACT_APP_DEV_URL}/api/carts/remove-cart/${user._id}/${cartItem.product._id}`
       );
 
-      if (response.status === 200 && response.data.success) {
+      if (response.status === 200 && response.data.message) {
         let items = [...cartItems];
-        console.log(items);
         items = items.filter((p) => p.product._id !== cartItem.product._id);
         setCartItems(items);
         toast.success("Item successfully removed from cart");
@@ -109,10 +106,17 @@ const AppContext = ({ children }) => {
   };
 
   const incrementQuantity = () => {
-    setQuantity(quantity + 1);
+    setQuantity((prevQuantity) => {
+      if (prevQuantity < 5) {
+        return prevQuantity + 1;
+      } else {
+        toast.error("You reached the maximum quantity!");
+        return prevQuantity; // Return the current quantity if limit is reached
+      }
+    });
   };
 
-  const descrementQuantity = () => {
+  const decrementQuantity = () => {
     setQuantity((prevState) => {
       if (prevState === 1) return 1;
       else return prevState - 1;
@@ -141,7 +145,7 @@ const AppContext = ({ children }) => {
         isLogin,
         setIsLogin,
         incrementQuantity,
-        descrementQuantity,
+        decrementQuantity,
         quantity,
         setQuantity,
         cookies,

@@ -10,9 +10,15 @@ import { MdClose } from "react-icons/md";
 
 const Cart = ({ setShowCart }) => {
   const navigate = useNavigate();
-  const { cartSubTotal, setCartSubTotal, cartItems, setCartItems, user ,cookies} =
-    useContext(Context);
-
+  const {
+    cartSubTotal,
+    setCartSubTotal,
+    cartItems,
+    setCartItems,
+    user,
+    cookies,
+  } = useContext(Context);
+  
   useEffect(() => {
     document.body.style.overflowY = "hidden";
     return () => {
@@ -21,23 +27,24 @@ const Cart = ({ setShowCart }) => {
   }, []);
 
   useEffect(() => {
-    if(cookies.swiftbuyToken){
+    if (cookies.swiftbuyToken) {
       getCart();
-    }else{
+    } else {
       toast.error("Login to Check Cart items.");
     }
   }, []);
 
   const getCart = async () => {
     try {
-      const cart = await fetchDataFromApi(`/api/carts/get-cart/${user?._id}`);
-      if (cart && cart?.response?.data?.empty) {
-        throw new Error(cart?.response?.data?.empty);
+      const res = await fetchDataFromApi(`/api/carts/get-cart/${user?._id}`);
+      console.log(res);
+      if (res && res?.response?.data?.error) {
+        throw new Error(res?.response?.data?.error);
       }
-      if (cart && cart.cart) {
-        setCartItems(cart.cart);
+      if (res && res.cart) {
+        setCartItems(res.cart.products);
         let subTotal = 0;
-        cart.cart.forEach((item) => {
+        res.cart.products.forEach((item) => {
           subTotal += item.product.price * item.quantity;
         });
         setCartSubTotal(subTotal);
@@ -62,35 +69,38 @@ const Cart = ({ setShowCart }) => {
           </span>
         </div>
         {cartItems?.length ? (
-          <>
-            <CartItem />
-            <div className="cart-footer">
-              <div className="subtotal">
-                <span className="text">Subtotal : </span>
-                <span className="text total">&#8377; {cartSubTotal} </span>
-              </div>
-              <div className="button">
-                <div
-                  className="checkout-cta"
-                  onClick={() => {
-                    navigate("/check");
-                    setShowCart(false);
-                  }}
-                >
-                  Checkout
-                </div>
-              </div>
-            </div>
-          </>
-        ) : (
-          <div className="empty-cart">
-            <BsCartX />
-            <span>No Products in cart.</span>
-            <button className="return-cta" onClick={() => setShowCart(false)}>
-              RETURN TO SHOP
-            </button>
-          </div>
-        )}
+  <>
+    <div className="cart-items-container">
+      <CartItem />
+    </div>
+    <div className="cart-footer">
+      <div className="subtotal">
+        <span className="text">Subtotal : </span>
+        <span className="text total">&#8377; {cartSubTotal} </span>
+      </div>
+      <div className="button">
+        <div
+          className="checkout-cta"
+          onClick={() => {
+            navigate("/check");
+            setShowCart(false);
+          }}
+        >
+          Checkout
+        </div>
+      </div>
+    </div>
+  </>
+) : (
+  <div className="empty-cart">
+    <BsCartX />
+    <span>No Products in cart.</span>
+    <button className="return-cta" onClick={() => setShowCart(false)}>
+      RETURN TO SHOP
+    </button>
+  </div>
+)}
+
       </div>
     </div>
   );

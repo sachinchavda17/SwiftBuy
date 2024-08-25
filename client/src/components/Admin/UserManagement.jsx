@@ -68,10 +68,9 @@ const UserManagement = () => {
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white rounded-lg shadow-lg">
           <thead>
-            <tr className="bg-gray-100 text-gray-800 text-left">
+            <tr className=" text-gray-800 text-left border-b-2 ">
               <th className="py-3 px-6">User Name</th>
               <th className="py-3 px-6">Email</th>
-              <th className="py-3 px-6">Phone</th>
               <th className="py-3 px-6">Role</th>
               <th className="py-3 px-6">Actions</th>
             </tr>
@@ -83,7 +82,6 @@ const UserManagement = () => {
                   {user.firstName + " " + user.lastName}
                 </td>
                 <td className="py-3 px-6">{user.email}</td>
-                <td className="py-3 px-6">{user.phone || "N/A"}</td>
                 <td className="py-3 px-6">{user.role}</td>
                 <td className="py-3 px-6 flex items-center gap-2">
                   <button
