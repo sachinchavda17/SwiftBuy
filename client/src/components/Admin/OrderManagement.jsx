@@ -41,6 +41,8 @@ const OrderManagement = () => {
         return "bg-purple-200 text-purple-800";
       case "cancelled":
         return "bg-red-200 text-red-800";
+      case "received":
+        return "bg-teal-200 text-teal-800";
       default:
         return "bg-gray-200 text-gray-800";
     }
@@ -87,14 +89,14 @@ const OrderManagement = () => {
 
   const handleViewClick = (order) => {
     if (order && order._id) {
-      setSelectedOrderId(order._id); // Ensure only the _id string is passed
+      setSelectedOrderId(order._id); 
       setIsModalOpen(true);
     }
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setSelectedOrderId(null); // Reset selectedOrderId to null
+    setSelectedOrderId(null); 
   };
 
   return (
@@ -180,7 +182,7 @@ const OrderManagement = () => {
                     <>
                       <button
                         onClick={handleSaveClick}
-                        className="text-green-500 py-2 rounded-lg hover:text-green-600 transition duration-300"
+                        className="text-blue-500 py-2 rounded-lg hover:text-blue-600 transition duration-300"
                       >
                         <FaSave fontSize={20} />
                       </button>
